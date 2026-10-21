@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>HI LIVE 半岛落日营地 ｜ 来落日营地，过不一样的周末</title>
+<style>
+:root {
+    --orange:#FF7E5F; --orange2:#FEB47B; --sea:#1B6B93; --sea-d:#12466B;
+    --sand:#FFF8F0; --ink:#2B3A4A; --card:#FFFFFF; --shadow:0 4px 20px rgba(27,107,147,.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background-color:#A9DBEF; color:var(--ink); max-width:520px; margin:0 auto; padding-bottom:24px; }
+/* ===== 蓝天白云海上风光背景（2026-09-05 老爸指定，第一屏落日图保留）===== */
+html { background:#9DD5EE; }
+body {
+  background:#9DD5EE url('bg_sky.jpg') no-repeat center top / cover;
+}
+/* ===== 顶部横幅（营地实景落日背景·base64内嵌） ===== */
+.hero { background:url('assets/img1.jpg') center bottom / cover no-repeat;
+        padding:0; border-radius:0 0 34px 34px; position:relative; overflow:hidden; min-height:300px; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.32) 0%, rgba(0,0,0,.10) 50%, rgba(0,0,0,.46) 100%); }
+.hero-content { position:relative; z-index:2; padding:40px 20px 84px; text-align:center; }
+.hero h1 { color:#fff; font-size:28px; font-weight:900; letter-spacing:2px;
+        text-shadow:0 3px 14px rgba(0,0,0,.45); line-height:1.3; }
+.hero .slogan { color:#fff; font-size:17px; font-weight:600; margin-top:10px;
+        text-shadow:0 2px 8px rgba(0,0,0,.35); letter-spacing:2px; }
+.hero .sub { color:rgba(255,255,255,.92); font-size:12.5px; margin-top:14px; text-shadow:0 1px 4px rgba(0,0,0,.35); }
+.hero .date-chip { display:inline-block; background:rgba(255,255,255,.22); backdrop-filter:blur(6px);
+        color:#fff; border:1px solid rgba(255,255,255,.28); border-radius:20px;
+        padding:5px 14px; font-size:12px; margin-top:14px; margin-right:5px; }
+/* ===== GPS 一键导航（2026-09-05 老爸新增）===== */
+.hero .nav-hero-btn { display:inline-flex; align-items:center; gap:7px; margin-top:16px;
+        background:rgba(255,255,255,.92); color:var(--orange); border:none; cursor:pointer;
+        border-radius:24px; padding:11px 26px; font-size:15px; font-weight:800; letter-spacing:1px;
+        box-shadow:0 4px 16px rgba(0,0,0,.25); }
+.nav-hero-btn:active { transform:scale(.96); }
+.nav-mask { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:999; align-items:flex-end; }
+.nav-mask.show { display:flex; }
+.nav-sheet { width:100%; max-width:520px; margin:0 auto; background:#fff; border-radius:24px 24px 0 0;
+        padding:22px 20px calc(26px + env(safe-area-inset-bottom)); animation:navUp .25s ease; }
+@keyframes navUp { from{transform:translateY(60px);opacity:.4} to{transform:translateY(0);opacity:1} }
+.nav-sheet h3 { font-size:17px; font-weight:800; text-align:center; }
+.nav-addr { text-align:center; font-size:12.5px; color:#8A97A5; line-height:1.7; margin:10px 0 16px; }
+.nav-btn { display:flex; align-items:center; gap:10px; text-decoration:none; border-radius:16px;
+        padding:14px 18px; font-size:15px; font-weight:700; margin-bottom:10px; color:#fff;
+        box-shadow:0 3px 12px rgba(0,0,0,.12); }
+.nav-btn:active { transform:scale(.98); }
+.nav-btn .nb-sub { font-weight:400; font-size:11px; opacity:.85; margin-left:auto; }
+.nav-btn.amap { background:linear-gradient(135deg,#00A47C,#0090FF); }
+.nav-btn.bmap { background:linear-gradient(135deg,#3385FF,#2255CC); }
+.nav-btn.tmap { background:linear-gradient(135deg,#12B7F5,#0D9FE0); }
+.nav-copy { width:100%; border:1.5px dashed #C9D4DE; background:#F6FAFC; color:var(--sea-d);
+        border-radius:14px; padding:12px; font-size:13px; font-weight:600; cursor:pointer; margin-top:2px; }
+.nav-close { width:100%; border:none; background:transparent; color:#9AA7B4; font-size:13px;
+        padding:12px; cursor:pointer; margin-top:4px; }
+/* ===== 状态卡 ===== */
+.status-card { background:var(--card); border-radius:22px; box-shadow:var(--shadow);
+        padding:20px; margin:-52px 16px 14px; position:relative; z-index:2; text-align:center; }
+.status-now { font-size:13px; color:#8A97A5; }
+.status-state { font-size:26px; font-weight:800; margin:6px 0 4px; }
+.status-state.rising { color:var(--sea); }
+.status-state.ebbing { color:var(--orange); }
+.status-next { font-size:14px; color:var(--ink); }
+.status-next b { color:var(--sea-d); }
+/* ===== 通用节 ===== */
+.section { margin:20px 16px 0; }
+.section-title { font-size:17px; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.section-title .bar { width:5px; height:18px; background:linear-gradient(var(--orange),var(--orange2)); border-radius:3px; }
+/* ===== 四潮时卡 ===== */
+.tide-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.tide-card { background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:12px 6px; text-align:center; }
+.tide-card.high { border-top:3px solid var(--sea); }
+.tide-card.low { border-top:3px solid var(--orange); }
+.tc-label { font-size:11px; color:#8A97A5; }
+.tc-time { font-size:19px; font-weight:800; margin:3px 0; }
+.tc-m { font-size:12px; font-weight:700; color:var(--sea-d); }
+.tc-m .unit { font-size:10px; font-weight:400; }
+.tc-desc { font-size:10px; color:#A8B3BE; margin-top:3px; }
+/* ===== 曲线图 ===== */
+.chart-card { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:16px 10px 8px; }
+.chart-note { text-align:center; font-size:11px; color:#A8B3BE; padding:6px 0 8px; }
+/* ===== 节目单 ===== */
+.show-card { background:var(--card); border-radius:18px; box-shadow:var(--shadow);
+        padding:14px 14px; margin-bottom:10px; display:flex; gap:12px; align-items:flex-start; }
+.show-icon { font-size:28px; line-height:1; margin-top:2px; }
+.show-title { font-size:15px; font-weight:800; }
+.show-time { font-size:13px; color:var(--sea-d); font-weight:700; margin:3px 0; }
+.show-desc { font-size:12px; color:#6B7A89; line-height:1.6; }
+.tag { font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; vertical-align:2px; }
+.tag-hot { background:#FFE8E0; color:#E85A3A; }
+.tag-fun { background:#E3F2FD; color:#1B6B93; }
+.tag-info { background:#F0F2F5; color:#8A97A5; }
+/* ===== 日落卡 ===== */
+.sunset-card { background:linear-gradient(120deg,#2C3E67,#1B6B93); border-radius:20px; box-shadow:var(--shadow);
+        padding:18px 20px; color:#fff; display:flex; justify-content:space-between; align-items:center; }
+.sunset-card .big { font-size:30px; font-weight:800; }
+.sunset-card .lbl { font-size:12px; opacity:.85; }
+/* ===== 未来7天 ===== */
+.week-card { background:var(--card); border-radius:18px; box-shadow:var(--shadow); overflow-x:auto; }
+.week-card table { width:100%; border-collapse:collapse; font-size:12px; min-width:460px; }
+.week-card th { background:#F4F8FB; padding:10px 6px; font-size:11px; color:#5E7185; white-space:nowrap; }
+.week-card td { padding:10px 6px; border-top:1px solid #F0F3F6; vertical-align:top; }
+.week-card .sub { font-size:10px; color:#A8B3BE; }
+.week-card .mono { font-size:11px; line-height:1.7; }
+.today-row { background:#FFF7F0; }
+.pill { font-size:10px; padding:3px 9px; border-radius:10px; white-space:nowrap; }
+.p-big { background:linear-gradient(90deg,#FF416C,#FF4B2B); color:#fff; font-weight:800; box-shadow:0 2px 8px rgba(255,65,108,.28); }
+.p-mid { background:#FFF3D6; color:#B8791A; }
+.p-small { background:#EDF2F7; color:#7C8BA0; }
+/* ===== 大潮卡 ===== */
+.bigtide { background:linear-gradient(120deg,#FFF3E4,#FFE8E0); border-radius:16px; padding:14px 16px; font-size:13px; color:#9A4A1E; line-height:1.7; }
+/* ===== 合作伙伴 ===== */
+.partner-card { display:flex; gap:12px; background:var(--card); border-radius:18px; box-shadow:var(--shadow);
+        padding:14px; margin-bottom:10px; align-items:flex-start; }
+.p-icon { font-size:26px; width:46px; height:46px; background:linear-gradient(135deg,#FFF3E4,#FFE8E0);
+        border-radius:14px; display:flex; align-items:center; justify-content:center; flex:none; }
+.p-name { font-size:15px; font-weight:800; }
+.p-tag { font-size:10px; background:#FFF3D6; color:#B8791A; border-radius:10px; padding:2px 8px; font-weight:700; vertical-align:2px; margin-left:5px; }
+.p-desc { font-size:12px; color:#6B7A89; line-height:1.65; margin-top:4px; }
+.p-cta { font-size:11px; color:#15803D; font-weight:700; margin-top:6px; }
+.partner-note { font-size:10.5px; color:#A8B3BE; text-align:center; margin-top:4px; }
+.partner-link { text-decoration:none; color:inherit; cursor:pointer; transition:transform .15s, box-shadow .15s; }
+.partner-link:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,0,0,.12); }
+.partner-link:active { transform:scale(.98); }
+.partner-qr { cursor:pointer; transition:transform .15s, box-shadow .15s; }
+.partner-qr:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,0,0,.12); }
+.partner-qr:active { transform:scale(.98); }
+/* ===== 二维码弹窗 ===== */
+.qr-overlay { position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:200; padding:20px; }
+.qr-overlay.show { display:flex; }
+.qr-box { background:#fff; border-radius:22px; padding:24px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.35); animation:qrPop .25s ease-out; }
+@keyframes qrPop { from{opacity:0; transform:scale(.85);} to{opacity:1; transform:scale(1);} }
+.qr-box img { width:100%; border-radius:14px; display:block; pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.qr-title { font-size:16px; font-weight:800; margin-bottom:6px; color:#2B3A4A; }
+.qr-tip { font-size:12px; color:#6B7A89; margin-top:10px; line-height:1.6; }
+.qr-close { margin-top:16px; padding:10px 26px; border:none; border-radius:20px; background:linear-gradient(90deg,#FF9A56,#FF6B6B); color:#fff; font-size:14px; font-weight:700; cursor:pointer; }
+/* ===== 晨报文案 ===== */
+.msg-card { background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:16px; }
+.msg-box { background:#FAFCFE; border:1px dashed #C9D8E4; border-radius:12px; padding:14px;
+        font-size:13px; line-height:1.8; white-space:pre-wrap; color:#33475C; }
+.copy-btn { margin-top:10px; width:100%; padding:11px; border:none; border-radius:12px; cursor:pointer;
+        background:linear-gradient(90deg,var(--orange),var(--orange2)); color:#fff; font-size:14px; font-weight:700; }
+.copy-btn:active { opacity:.85; }
+/* ===== 营业状态 ===== */
+.status-note { background:#FFFDF5; border:1px solid #F2E3B3; border-radius:16px; padding:14px 16px; font-size:12px; color:#8A7420; line-height:1.8; }
+/* ===== footer ===== */
+.footer { text-align:center; font-size:11px; color:#A8B3BE; margin:22px 16px 0; line-height:1.8; }
+.toast { position:fixed; left:50%; bottom:40px; transform:translateX(-50%) translateY(20px); background:#2B3A4A;
+        color:#fff; font-size:13px; padding:10px 22px; border-radius:20px; opacity:0; transition:.3s; pointer-events:none; z-index:99; }
+.toast.show { opacity:.95; transform:translateX(-50%) translateY(0); }
+/* ===== 悬浮AI客服 ===== */
+.fab { position:fixed; right:14px; bottom:96px; z-index:60; width:58px; height:58px; border-radius:50%;
+        background:linear-gradient(135deg,#34D399,#16A34A); color:#fff; border:2.5px solid #fff;
+        display:flex; flex-direction:column; align-items:center; justify-content:center;
+        box-shadow:0 6px 22px rgba(22,163,74,.45); cursor:pointer; }
+.fab::after { content:''; position:absolute; inset:-5px; border-radius:50%;
+        border:2px solid rgba(34,197,94,.55); animation:pulse 2s infinite; }
+@keyframes pulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.35);opacity:0} }
+.fab .fi { font-size:20px; line-height:1; }
+.fab .ft { font-size:9.5px; font-weight:800; margin-top:2px; }
+.chat { position:fixed; right:14px; bottom:166px; z-index:61; width:min(88vw,340px);
+        background:#fff; border-radius:18px; box-shadow:0 14px 44px rgba(0,0,0,.22);
+        display:none; flex-direction:column; overflow:hidden; max-height:72vh; }
+.chat.open { display:flex; animation:pop .18s ease; }
+@keyframes pop { from{transform:translateY(10px);opacity:0} to{transform:none;opacity:1} }
+.chat-head { background:linear-gradient(120deg,#16A34A,#22C55E); color:#fff; padding:12px 14px;
+        display:flex; justify-content:space-between; align-items:center; }
+.chat-head .t { font-size:14px; font-weight:800; }
+.chat-head .s { font-size:10px; opacity:.92; margin-top:2px; }
+.chat-head button { background:none; border:none; color:#fff; font-size:17px; cursor:pointer; padding:2px 4px; }
+.chat-body { padding:12px; overflow-y:auto; flex:1; background:#F6FBF7; }
+.msg { max-width:86%; padding:9px 12px; border-radius:14px; font-size:13px; line-height:1.75;
+        margin-bottom:8px; word-break:break-word; }
+.msg.bot { background:#fff; border:1px solid #D9EFE0; color:#2B3A4A; border-bottom-left-radius:4px; }
+.msg.user { background:linear-gradient(120deg,#22C55E,#16A34A); color:#fff; margin-left:auto; border-bottom-right-radius:4px; }
+.msg b { color:#15803D; }
+.chips { display:flex; gap:6px; padding:8px 10px; overflow-x:auto; background:#fff; border-top:1px solid #EEF4EF; }
+.chip { flex:none; font-size:11.5px; color:#15803D; background:#EAF7EE; border:1px solid #CDEBD6;
+        border-radius:14px; padding:5px 11px; cursor:pointer; font-weight:600; }
+.chat-input { display:flex; gap:8px; padding:10px; background:#fff; }
+.chat-input input { flex:1; border:1.5px solid #D9E4DC; border-radius:12px; padding:9px 12px; font-size:13px; outline:none; }
+.chat-input input:focus { border-color:#22C55E; }
+.chat-input button { border:none; border-radius:12px; background:linear-gradient(120deg,#22C55E,#16A34A);
+        color:#fff; padding:0 16px; font-size:13px; font-weight:700; cursor:pointer; }
+.chat-foot { text-align:center; font-size:11px; color:#6B7A89; padding:8px 10px 12px; background:#fff; }
+.chat-foot a { color:#15803D; font-weight:800; text-decoration:none; }
+
+/* ===== 天气实况卡 ===== */
+.weather-card { background:linear-gradient(135deg,#E3F2FD 0%,#FFF8F0 100%); border-radius:20px; box-shadow:var(--shadow);
+        padding:16px; display:flex; flex-direction:column; gap:10px; }
+.weather-main { display:flex; align-items:baseline; gap:8px; }
+.weather-temp { font-size:42px; font-weight:900; color:var(--sea-d); line-height:1; }
+.weather-temp .unit { font-size:18px; font-weight:600; color:#6B7A89; margin-left:2px; }
+.weather-desc { font-size:16px; font-weight:700; color:var(--orange); }
+.weather-meta { display:flex; gap:14px; }
+.weather-meta div { font-size:13px; color:#4A5A6A; background:rgba(255,255,255,.7); padding:6px 12px; border-radius:12px; }
+.weather-meta .label { color:#8A97A5; margin-right:6px; }
+.weather-tip { font-size:11px; color:#7C8BA0; margin-top:2px; }
+
+/* ===== 欢迎弹窗（语音入住须知）===== */
+.welcome-overlay { position:fixed; inset:0; background:rgba(0,0,0,.62); display:flex; align-items:center; justify-content:center;
+        z-index:210; padding:18px; opacity:0; pointer-events:none; transition:opacity .25s; }
+.welcome-overlay.show { opacity:1; pointer-events:auto; }
+.welcome-box { background:#fff; border-radius:24px; padding:22px 20px 18px; max-width:360px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.35);
+        transform:scale(.92); transition:transform .25s; }
+.welcome-overlay.show .welcome-box { transform:scale(1); }
+.welcome-title { font-size:18px; font-weight:900; color:#2B3A4A; text-align:center; margin-bottom:14px; }
+.welcome-body p { font-size:13px; color:#5E7185; text-align:center; margin-bottom:12px; line-height:1.7; }
+.welcome-voice { width:100%; padding:13px; border:none; border-radius:14px; background:linear-gradient(90deg,#FF9A56,#FF6B6B);
+        color:#fff; font-size:15px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+.welcome-voice:active { opacity:.9; }
+.welcome-voice-secondary { background:none; border:none; color:#1B6B93; font-size:12.5px; padding:6px 8px; cursor:pointer; text-decoration:underline; }
+.welcome-voice-tip { font-size:11.5px; color:#8A7420; background:#FFFDF5; border:1px solid #F2E3B3;
+        border-radius:10px; padding:8px 12px; margin-top:10px; line-height:1.6; display:none; }
+.welcome-voice-tip.show { display:block; }
+.voice-text { background:#FAFCFE; border:1px dashed #C9D8E4; border-radius:12px; padding:12px; font-size:12px; line-height:1.8; color:#33475C;
+        max-height:120px; overflow-y:auto; margin-top:12px; }
+.voice-progress { width:100%; height:6px; background:#FFE8E0; border-radius:3px; margin-top:12px; overflow:hidden; }
+.voice-bar { height:100%; width:0%; background:linear-gradient(90deg,#FF9A56,#FF6B6B); border-radius:3px; transition:width .25s linear; }
+.voice-btns { display:flex; gap:8px; margin-top:10px; align-items:center; }
+.voice-btns .welcome-voice { flex:1; }
+.welcome-btns { display:flex; align-items:center; justify-content:space-between; margin-top:16px; }
+.welcome-btns label { font-size:12px; color:#6B7A89; display:flex; align-items:center; gap:4px; }
+.welcome-close { padding:10px 18px; border:none; border-radius:14px; background:#1B6B93; color:#fff; font-size:13px; font-weight:700; cursor:pointer; }
+
+/* ===== 大潮钓鱼订阅卡 ===== */
+.fish-card { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:16px; overflow:hidden; }
+.fish-head { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+.fish-icon { font-size:34px; }
+.fish-title { font-size:16px; font-weight:900; color:#2B3A4A; }
+.fish-sub { font-size:12px; color:#6B7A89; line-height:1.6; margin-top:3px; }
+.fish-info { background:linear-gradient(90deg,#FFF3E4,#FFE8E0); border-radius:14px; padding:12px 14px; font-size:13px; color:#8A4A2A; line-height:1.7; margin-bottom:14px; }
+.fish-form { display:flex; flex-direction:column; gap:10px; }
+.fish-row { display:flex; gap:10px; }
+.fish-row input, .fish-form input, .fish-form select { flex:1; border:1.5px solid #D9E4DC; border-radius:12px; padding:10px 12px; font-size:13px; outline:none; }
+.fish-row input:focus, .fish-form input:focus, .fish-form select:focus { border-color:#22C55E; }
+.fish-btn { width:100%; padding:12px; border:none; border-radius:14px; background:linear-gradient(90deg,#22C55E,#16A34A);
+        color:#fff; font-size:14px; font-weight:800; cursor:pointer; }
+.fish-btn:active { opacity:.92; }
+.fish-btn.fish-secondary { background:#fff; color:#16A34A; border:1.5px solid #22C55E; }
+.fish-or { text-align:center; font-size:12px; color:#A8B3BE; position:relative; }
+.fish-or::before, .fish-or::after { content:""; position:absolute; top:50%; width:38%; height:1px; background:#E5E9EF; }
+.fish-or::before { left:0; } .fish-or::after { right:0; }
+.fish-done { text-align:center; padding:10px 6px; }
+.fish-done-icon { width:54px; height:54px; border-radius:50%; background:#DCFCE7; color:#16A34A; font-size:26px; font-weight:900;
+        display:flex; align-items:center; justify-content:center; margin:0 auto 10px; }
+.fish-done-title { font-size:16px; font-weight:900; color:#16A34A; }
+.fish-done-text { font-size:12px; color:#6B7A89; line-height:1.7; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-box">
+        <div class="welcome-title">👋 欢迎来到 HI LIVE 半岛落日营地</div>
+        <div class="welcome-body">
+            <p>亲爱的朋友，先听阿龙讲一段 30 秒的营地介绍 🎙️</p>
+            <!-- 1. 主角：阿龙真人录音（内嵌 base64） -->
+            <audio id="welcomeAudio" src="assets/audio1.mp3" preload="auto" webkit-playsinline="true" playsinline="true"></audio>
+            <div class="voice-progress" id="voiceProgress">
+                <div class="voice-bar"></div>
+            </div>
+            <div class="voice-btns">
+                <button class="welcome-voice" id="welcomePlayBtn" onclick="playWelcomeVoice()">▶️ 收听阿龙介绍</button>
+                <button class="welcome-voice-secondary" onclick="toggleTts()">📖 改用语音合成</button>
+            </div>
+            <!-- 2. 备用：TTS 朗读（万一上面失败） -->
+            <div class="welcome-voice-tip" id="welcomeVoiceTip"></div>
+            <div class="voice-text" id="voiceText">欢迎来到 HI LIVE 半岛落日营地！我们是福建省漳浦县前亭镇整美村的海边营地。目前营地正在整修升级中，预计二零二七年四月重新开业。您可以通过本页面查看每日潮汐、天气、日落时间，还能订阅大潮钓鱼提醒。赶海抓螃蟹建议晚上七点到九点半，看鱼骨沙洲请在干潮前后两小时到达。期待与您在海边相遇，祝您有一个难忘的周末！</div>
+        </div>
+        <div class="welcome-btns">
+            <label><input type="checkbox" id="noMoreWelcome"> 今天不再打扰</label>
+            <button class="welcome-close" onclick="closeWelcome()">我知道了</button>
+        </div>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>HI LIVE 半岛落日营地</h1>
+        <div class="slogan">来落日营地，过不一样的周末</div>
+        <div class="sub">鱼骨沙洲 · 白浪浅水 · 无敌落日 ｜ 潮汐先知道，行程不扑空</div>
+        <span class="date-chip" id="heroDate">📅 —</span>
+        <span class="date-chip" id="heroLunar">农历—</span>
+        <span class="date-chip" id="heroTideType">潮况—</span>
+        <div><button class="nav-hero-btn" onclick="openNav()">📍 一键导航到营地</button></div>
+    </div>
+</div>
+
+<!-- GPS 导航选择层（高德/百度/腾讯三入口 + 复制地址） -->
+<div class="nav-mask" id="navMask" onclick="closeNav(event)">
+    <div class="nav-sheet">
+        <h3>📍 一键导航到营地</h3>
+        <div class="nav-addr">福建省漳州市漳浦县前亭镇整美村<br>观海路 · 井尾王公庙旁（海边）<br>也可在地图 App 里直接搜「hilive落日营地」</div>
+        <a class="nav-btn amap" href="https://uri.amap.com/marker?position=117.972675,24.155620&name=HI%20LIVE%20%E5%8D%8A%E5%B2%9B%E8%90%BD%E6%97%A5%E8%90%A5%E5%9C%B0&src=hilive&coordinate=gaode&callnative=1" target="_blank" rel="noopener">
+            🚗 高德地图（推荐）<span class="nb-sub">装了App一键唤起</span></a>
+        <a class="nav-btn bmap" href="https://api.map.baidu.com/marker?location=24.161903,117.979137&title=HI%20LIVE%20%E5%8D%8A%E5%B2%9B%E8%90%BD%E6%97%A5%E8%90%A5%E5%9C%B0&content=%E6%BC%B3%E6%B5%A6%E5%8E%BF%E5%89%8D%E4%BA%AD%E9%95%87%E6%95%B4%E7%BE%8E%E6%9D%91%EF%BC%88%E4%BA%95%E5%B0%BE%E7%8E%8B%E5%85%AC%E5%BA%99%E6%97%81%EF%BC%89&output=html&src=hilive" target="_blank" rel="noopener">
+            🗺️ 百度地图<span class="nb-sub">网页版也能用</span></a>
+        <a class="nav-btn tmap" href="https://apis.map.qq.com/uri/v1/marker?marker=coord:24.155620,117.972675&referer=hilive" target="_blank" rel="noopener">
+            🧭 腾讯地图<span class="nb-sub">微信里最顺</span></a>
+        <button class="nav-copy" onclick="copyAddr(event)">📋 复制地址文字（发给朋友）</button>
+        <button class="nav-close" onclick="closeNav()">取消</button>
+    </div>
+</div>
+
+<!-- BGM：muted autoplay 双重策略。第一次进入先静音尝试放，避开 iOS Safari 拦截；
+     用户任一交互后立刻解除静音。117KB / 30s / 32kbps / ukulele 海滩风 -->
+<audio id="bgm" src="assets/audio2.mp3" autoplay muted loop preload="auto" playsinline webkit-playsinline="true" x5-video-player-type="h5"></audio>
+
+<!-- 音乐开关按钮（左上）+ 动态音波条指示播放中 -->
+<button id="bgmToggle" onclick="toggleBgm()" title="背景音乐" style="position:fixed;left:14px;top:14px;z-index:99;width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,.88);box-shadow:0 2px 10px rgba(0,0,0,.22);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;">
+  <span id="bgmBars" style="display:inline-flex;align-items:flex-end;gap:2px;height:14px;margin-right:3px;opacity:0.4;">
+    <span class="bmbar" style="width:3px;background:#1c8a4a;border-radius:2px;height:30%;animation:bmbeat 1.2s ease-in-out infinite;"></span>
+    <span class="bmbar" style="width:3px;background:#1c8a4a;border-radius:2px;height:60%;animation:bmbeat 1.2s ease-in-out .2s infinite;"></span>
+    <span class="bmbar" style="width:3px;background:#1c8a4a;border-radius:2px;height:90%;animation:bmbeat 1.2s ease-in-out .4s infinite;"></span>
+  </span>
+  <span id="bgmIcon">🔇</span>
+</button>
+<style>
+@keyframes bmbeat{0%,100%{transform:scaleY(0.3)}50%{transform:scaleY(1)}}
+.bmbar{transform-origin:bottom}
+</style>
+
+<div class="status-card">
+    <div class="status-now" id="nowTime">—</div>
+    <div class="status-state" id="nowState">读取中…</div>
+    <div class="status-next" id="nextTide">—</div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>天气实况</div>
+    <div class="weather-card">
+        <div class="weather-main">
+            <div class="weather-temp">--<span class="unit">°C</span></div>
+            <div class="weather-desc">正在获取…</div>
+        </div>
+        <div class="weather-meta">
+            <div><span class="label">湿度</span><span class="val">--</span></div>
+            <div><span class="label">风速</span><span class="val">--</span></div>
+        </div>
+        <div class="weather-tip">🌊 海边天气随时会变，建议出发前再看一次</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>今日潮汐时刻</div>
+    <div class="tide-grid">
+        <div class="tide-card high">
+            <div class="tc-label">🌊 满潮</div>
+            <div class="tc-time">--:--</div><div class="tc-m">--<span class="unit">米</span></div>
+            <div class="tc-desc">白浪浅水登场</div>
+        </div>
+        <div class="tide-card low">
+            <div class="tc-label">🐚 干潮</div>
+            <div class="tc-time">--:--</div><div class="tc-m">--<span class="unit">米</span></div>
+            <div class="tc-desc">沙洲浮现·赶海好时机</div>
+        </div>
+        <div class="tide-card high">
+            <div class="tc-label">🌊 满潮</div>
+            <div class="tc-time">--:--</div><div class="tc-m">--<span class="unit">米</span></div>
+            <div class="tc-desc">白浪浅水登场</div>
+        </div>
+        <div class="tide-card low">
+            <div class="tc-label">🐚 干潮</div>
+            <div class="tc-time">--:--</div><div class="tc-m">--<span class="unit">米</span></div>
+            <div class="tc-desc">沙洲浮现·赶海好时机</div>
+        </div></div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>潮汐曲线</div>
+    <div class="chart-card">
+        <svg id="tideChart" viewBox="0 0 440 200" style="width:100%;height:auto;"></svg>
+        <div class="chart-note">数据：厦门站 · TICON-4 潮汐模型（距营地约 33 公里） ｜ 蓝线=潮高 ｜ 🟢 绿牌 = 现在时刻</div>
+        <div class="chart-note" id="liveStatus" style="font-weight:700;color:#8A97A5;">正在获取今天的潮汐与天气…</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>今日节目单 <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（潮汐驱动）</span></div>
+    
+        <div class="show-card">
+            <div class="show-icon">🐚</div>
+            <div class="show-body">
+                <div class="show-title">鱼骨沙洲黄金时段 <span class="tag tag-hot">王牌</span></div>
+                <div class="show-time">🕐 —</div>
+                <div class="show-desc">按今日潮汐自动计算…</div>
+            </div>
+        </div>
+        <div class="show-card">
+            <div class="show-icon">🦀</div>
+            <div class="show-body">
+                <div class="show-title">礁石区夜赶海（抓螃蟹） <span class="tag tag-fun">亲子</span></div>
+                <div class="show-time">🕐 —</div>
+                <div class="show-desc">按今日潮汐自动计算…</div>
+            </div>
+        </div>
+        <div class="show-card">
+            <div class="show-icon">🏄</div>
+            <div class="show-body">
+                <div class="show-title">白浪浅水玩水 <span class="tag tag-info">涨潮限定</span></div>
+                <div class="show-time">🕐 —</div>
+                <div class="show-desc">按今日潮汐自动计算…</div>
+            </div>
+        </div>
+        <div class="show-card">
+            <div class="show-icon">🌅</div>
+            <div class="show-body">
+                <div class="show-title">落日桨板·日落观赏 <span class="tag tag-hot">必看</span></div>
+                <div class="show-time">🕐 —</div>
+                <div class="show-desc">按今日潮汐自动计算…</div>
+            </div>
+        </div>
+        <div class="show-card">
+            <div class="show-icon">🏊</div>
+            <div class="show-body">
+                <div class="show-title">防波堤内湾·亲子时光 <span class="tag tag-fun">全天</span></div>
+                <div class="show-time">🕐 09:00–17:00</div>
+                <div class="show-desc">内湾外浪被挡、水深及膝，桨板新手、独木舟、小朋友戏水的天然安全池</div>
+            </div>
+        </div>
+        <div class="show-card">
+            <div class="show-icon">🔥</div>
+            <div class="show-body">
+                <div class="show-title">篝火·露天电影·烟花 <span class="tag tag-fun">夜场</span></div>
+                <div class="show-time">🕐 —</div>
+                <div class="show-desc">天黑后海边篝火升起，露天电影开演，夜里还有烟花（现场安排为准）</div>
+            </div>
+        </div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>营地好伙伴 <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（合作伙伴推荐）</span></div>
+    <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=acong" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_acong.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">阿聪赶海 <span class="p-tag">赶海体验</span></div>
+            <div class="p-desc">跟着阿聪去赶海！礁石区哪里藏螃蟹他最清楚，装备齐全，新手也能满载而归。点卡片跳转抖音号</div>
+            <div class="p-cta">▶ 点我直接看视频</div>
+            </div>
+        </a><a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=acheng" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_acheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">阿城冲浪赶海 <span class="p-tag">冲浪教学</span></div>
+            <div class="p-desc">阿城教练带你追白浪——营地的长浪线最适合入门，趴板、冲浪一次就上手。还会带你去赶海</div>
+            <div class="p-cta">▶ 点我直接看视频</div>
+            </div>
+        </a><div class="partner-card">
+            <div class="p-icon">🤿</div>
+            <div class="p-body">
+                <div class="p-name">小戴潜水钓鱼 <span class="p-tag">潜水海钓</span></div>
+                <div class="p-desc">想看海底世界跟小戴走！浮潜、海钓一条龙，这片海的秘密他都知道</div>
+                <div class="p-cta">📞 预约咨询：营地客服专线 15392467749</div>
+            </div>
+        </div><a href="https://weixin.qq.com/sph/AGjmJU0xpm" target="_blank" rel="noopener" class="partner-card partner-link">
+            <div class="p-icon">🌿</div>
+            <div class="p-body">
+                <div class="p-name">闽龙生态农场 <span class="p-tag">生态农场</span></div>
+                <div class="p-desc">闽龙生态农场——整美村本地生态种植，点卡片直接打开农场详情</div>
+                <div class="p-cta">↗ 点我打开闽龙生态农场的视频号</div>
+            </div>
+        </a><a href="https://weixin.qq.com/sph/ATMj29mNL5" target="_blank" rel="noopener" class="partner-card partner-link">
+            <div class="p-icon">🍯</div>
+            <div class="p-body">
+                <div class="p-name">蜜原生态农场 <span class="p-tag">水果采摘</span></div>
+                <div class="p-desc">阿龙vs格格的蜜原生态农场——水果采摘、亲子田园，点卡片直接打开影音号看四季</div>
+                <div class="p-cta">↗ 点我打开蜜原生态农场的视频号</div>
+            </div>
+        </a><a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=shensui" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_shensui.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">深邃度假酒店 <span class="p-tag">海景住宿</span></div>
+            <div class="p-desc">漳浦本地海景度假酒店，点开看房间实拍与无敌海景</div>
+            <div class="p-cta">▶ 点我直接看视频</div>
+            </div>
+        </a>
+    <div class="partner-note">🤝 合作伙伴 · 排名不分先后 ｜ 合作洽谈：15392467749</div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>今日日落</div>
+    <div class="sunset-card">
+        <div>
+            <div class="lbl">🌇 太阳沉入海平面的时刻</div>
+            <div class="lbl" style="margin-top:16px;">建议日落前 90 分钟就位</div>
+        </div>
+        <div class="big">--:--</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>未来 7 天预报</div>
+    <div class="week-card">
+        <table>
+            <tr><th>日期</th><th>潮况</th><th>满潮／干潮</th><th>日落</th><th>主打</th></tr>
+            <tr><td colspan="5" style="padding:20px;text-align:center;color:#8A97A5;">正在获取未来七天潮汐…</td></tr>
+        </table>
+    </div>
+    <div style="height:10px"></div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>🎣 大潮钓鱼提醒订阅</div>
+    <div class="fish-card">
+        <div class="fish-head">
+            <div class="fish-icon">🐟</div>
+            <div>
+                <div class="fish-title">大潮前后 · 海鱼最肥</div>
+                <div class="fish-sub">农历初一十五前后是天文大潮，也是海钓、矶钓、赶海的黄金窗口</div>
+            </div>
+        </div>
+        <div class="fish-info">
+            <div id="bigDayTxt"><b>近期大潮日：</b>计算中…</div>
+            <div style="margin-top:6px"><b>适合：</b>🎣 海钓 🦀 赶海 🌊 矶钓 🦐 路亚</div>
+        </div>
+        <div class="fish-form" id="fishForm">
+            <div class="fish-row">
+                <input id="fishName" placeholder="怎么称呼您" maxlength="10">
+                <input id="fishPhone" placeholder="手机号" type="tel" maxlength="11">
+            </div>
+            <select id="fishType">
+                <option value="">选择偏好（可多选后备注）</option>
+                <option value="海钓">🎣 海钓</option>
+                <option value="矶钓">🌊 矶钓</option>
+                <option value="路亚">🦐 路亚</option>
+                <option value="赶海">🦀 赶海</option>
+                <option value="船钓">🚤 船钓</option>
+            </select>
+            <input id="fishNote" placeholder="备注：想钓什么鱼、几人、大概日期" maxlength="50">
+            <button class="fish-btn" onclick="submitFishingSub()">订阅提醒 · 大潮前通知我</button>
+            <div class="fish-or">或</div>
+            <button class="fish-btn fish-secondary" onclick="showQR('assets/img2.jpg', '添加阿龙微信')">📱 直接加阿龙微信（注明“钓鱼”）</button>
+        </div>
+        <div class="fish-done" id="fishDone" style="display:none">
+            <div class="fish-done-icon">✓</div>
+            <div class="fish-done-title">订阅成功！</div>
+            <div class="fish-done-text">大潮日前一晚，阿龙会微信或电话通知您。也可以现在长按二维码加阿龙好友。</div>
+            <button class="fish-btn fish-secondary" style="margin-top:10px" onclick="showQR('assets/img2.jpg', '添加阿龙微信')">➕ 加阿龙微信</button>
+        </div>
+    </div>
+</div>
+    <div class="bigtide">🐋 <b>大潮·渔汛日历</b>：初一十五前后天文大潮，海鱼最肥、礁石区最热闹——<span id="bigDayTxt2">近期大潮日计算中…</span>。想钓鱼可加阿龙微信或打客服专线 15392467749，大潮前一晚通知您。</div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>今日晨报（客服群发版）</div>
+    <div class="msg-card">
+        <div class="msg-box" id="msgBox">正在获取今天的潮汐数据，请稍候…</div>
+        <textarea id="msgBoxPlain" style="position:fixed;left:-9999px;top:-9999px;opacity:0;" readonly>正在获取今天的潮汐数据，请稍候…</textarea>
+        <button class="copy-btn" onclick="copyMsg()">📋 一键复制晨报文案</button>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-title"><span class="bar"></span>落日营地，怎么玩？ <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（达人带你玩）</span></div>
+    <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=cai" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_cai_xiansheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">蔡先生的分享 <span class="p-tag">视频号</span></div>
+            <div class="p-desc">起步即沙滩，退潮还能赶海！达人实拍带你走进漳浦HiLive落日野奢营地</div>
+            <div class="p-cta">↗ 点我直接看视频</div>
+        </div>
+    </a>
+<a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=yun" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_yunyoutianxia.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">芸游天下☁️ <span class="p-tag">视频号</span></div>
+            <div class="p-desc">野趣与浪漫共存，邂逅山海秘境！跟着芸游天下打卡漳州漳浦HiLive</div>
+            <div class="p-cta">↗ 点我直接看视频</div>
+        </div>
+    </a>
+<a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=hei" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_heijinjiang.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">黑金酱 <span class="p-tag">视频号</span></div>
+            <div class="p-desc">吸引我的不止有冲浪，还有超美的HiLive落日营地——达人黑金酱实拍</div>
+            <div class="p-cta">↗ 点我直接看视频</div>
+        </div>
+    </a>
+<a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=langhua&_r=0905" class="partner-card partner-link">
+        <div class="p-icon">🎵</div>
+        <div class="p-body">
+            <div class="p-name">浪花一朵朵 · 营地主题曲 <span class="p-tag">主题曲</span></div>
+            <div class="p-desc">任贤齐/光良/阿牛经典合唱，海边营地的浪花与浪漫，点开直接听 🎶</div>
+            <div class="p-cta">▶ 点我直接听主题曲</div>
+        </div>
+    </a>
+    
+<a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=mao" class="partner-card partner-link">
+        <div class="p-icon"><img src="videos/thumb_maomao.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-body">
+            <div class="p-name">毛毛爱吃辣 <span class="p-tag">达人实拍</span></div>
+            <div class="p-desc">毛毛带你吃玩落日营地！海边美食、帐篷住宿、营地生活一次分享</div>
+            <div class="p-cta">▶ 点我直接看视频</div>
+        </div>
+    </a>
+    
+    <div class="partner-note">🎬 达人玩法持续更新 · 排名不分先后 ｜ 合作洽谈：15392467749</div>
+</div>
+
+<div class="section">
+    <div class="status-note">⚠️ <b>营地营业状态</b>：落日营地目前整修升级中，预计 <b>2027 年 4 月</b>重新开业。潮汐预报照常每日更新，欢迎收藏本页提前规划行程。沙洲浮现受潮汐影响，以现场实际为准。</div>
+</div>
+
+<div class="footer">
+    🌅 HI LIVE 半岛落日营地 · 潮汐站<br>
+    潮汐数据：将军澳站（漳浦县，距营地约25公里）（国家海洋信息中心） ｜ 日落：天文算法计算<br>
+    本页由 AI 每日清晨自动更新 · 生成于 2026-09-04 16:42<br>
+    🎵 背景音乐：《浪花一朵朵》（任贤齐/光良/阿牛 Live 版片段）仅供营地预热页氛围使用；正式商用请取得词曲及录音版权授权
+</div>
+
+<div class="chat" id="chatPanel">
+    <div class="chat-head">
+        <div>
+            <div class="t">🤖 AI 客服小助手</div>
+            <div class="s">HI LIVE 半岛落日营地 · 24小时在线</div>
+        </div>
+        <button onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chips" id="chips"></div>
+    <div class="chat-input">
+        <input id="chatInput" placeholder="输入您的问题…" onkeydown="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()">发送</button>
+    </div>
+    <div class="chat-foot">AI 答不上来？打客服专线 ☎️ <a href="tel:15392467749">15392467749</a></div>
+</div>
+<div class="fab" onclick="toggleChat()"><div class="fi">💬</div><div class="ft">问问AI</div></div>
+
+<div class="qr-overlay" id="qrOverlay" onclick="if(event.target===this)hideQR()">
+    <div class="qr-box">
+        <div class="qr-title" id="qrTitle">二维码</div>
+        <img id="qrImg" src="" alt="二维码" style="width:100%;border-radius:14px;display:block;">
+        <div class="qr-tip" id="qrTip">用微信扫一扫即可关注影音号<br>或长按二维码识别</div>
+        <button class="qr-close" onclick="hideQR()">关闭</button>
+    </div>
+</div>
+
+<div class="toast" id="toast">✓ 已复制，去粘贴给客人吧</div>
+
+<script>
+let TIDES = [];
+let HOURLY = {};
+let SUNSET = "--:--";
+let DATE_TXT = "—";
+let TODAY_TIDES_TXT = "";
+let SANDBAR_WIN = "—";
+let CRAB_WIN = "—";
+const HOTLINE = "15392467749";
+
+/* ===== GPS 一键导航（2026-09-05 新增）===== */
+const CAMP_ADDR = "福建省漳州市漳浦县前亭镇整美村 观海路·井尾王公庙旁（HI LIVE 半岛落日营地）";
+function openNav(){ document.getElementById('navMask').classList.add('show'); }
+function closeNav(e){
+  if(e && e.target && e.currentTarget && e.target!==e.currentTarget){ return; } /* 点在面板内不关 */
+  document.getElementById('navMask').classList.remove('show');
+}
+function copyAddr(e){
+  if(e){ e.stopPropagation(); }
+  function ok(){ alert('地址已复制√ 可以粘贴发给朋友了'); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(CAMP_ADDR).then(ok, fallback);
+  } else { fallback(); }
+  function fallback(){
+    const ta = document.createElement('textarea');
+    ta.value = CAMP_ADDR; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); ok(); }catch(err){ alert('长按本行复制：\n'+CAMP_ADDR); }
+    document.body.removeChild(ta);
+  }
+}
+/* 顶部日期动态更新（原本写死 9/4，现改为每天自动） */
+(function(){
+  const d = new Date(), wk = ['日','一','二','三','四','五','六'][d.getDay()];
+  const el = document.getElementById('heroDate');
+  if(el){ el.textContent = '📅 ' + d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 星期' + wk; }
+})();
+
+/* ===== 达人卡智能分流:微信内=视频号直开(默认),微信外=跳抖音版 ===== */
+function smartOpen(e, dyUrl){
+  if(/MicroMessenger/i.test(navigator.userAgent)){ return true; }
+  e.preventDefault();
+  location.href = dyUrl;
+  return false;
+}
+
+const SPH_QR = {
+ 'ACzD48fLRK': 'assets/img4.png',
+ 'AANK2hWxpO': 'assets/img5.png',
+ 'AV1eRVDtfp': 'assets/img6.png'
+};
+
+/* ===== 二维码弹窗 ===== */
+function showQR(src, title){
+    document.getElementById('qrImg').src = src;
+    document.getElementById('qrTitle').textContent = title;
+    const tip = document.getElementById('qrTip');
+    if(title && (title.indexOf('阿龙') > -1 || title.indexOf('微信') > -1)){
+        tip.innerHTML = '1️⃣ 长按上图保存二维码 或 截图<br>2️⃣ 打开微信 → 右上角「+」→ 扫一扫<br>3️⃣ 从相册选取二维码即可添加阿龙好友';
+    } else {
+        tip.innerHTML = '用微信扫一扫即可关注影音号<br>或长按二维码识别';
+    }
+    var ov=document.getElementById('qrOverlay'); if(ov){ov.classList.add('show');}
+}
+function hideQR(){
+    document.getElementById('qrOverlay').classList.remove('show');
+}
+
+/* ===== BGM 自动播放（多重策略应对浏览器自动播放限制）=====
+   思路：
+   1) 页面加载即用 muted autoplay 启动（iOS Safari 也允许，因为没声音）
+   2) 用户第一次交互（touchstart/click/scroll/keydown）后立刻 unmute
+   3) 同时监听 visibilitychange，切回前台再尝试一次
+   4) 视觉指示：音波条动画 + 喇叭图标变化
+*/
+let bgmPlaying = false;
+let bgmUnlocked = false;
+function _bgmEl(){ return document.getElementById('bgm'); }
+function _iconEl(){ return document.getElementById('bgmIcon'); }
+function _barsEl(){ return document.getElementById('bgmBars'); }
+function _setBgmUI(on){
+    const ic = _iconEl(); const bs = _barsEl();
+    if(!ic) return;
+    if(on){ ic.textContent='🔊'; if(bs) bs.style.opacity=1; }
+    else   { ic.textContent='🔇'; if(bs) bs.style.opacity=0.35; }
+}
+function tryPlayBgm(opts){
+    const a = _bgmEl(); if(!a) return;
+    const withSound = !opts || opts.withSound !== false;
+    if(withSound){ a.muted = false; a.volume = 0.35; }
+    else         { a.muted = true;  a.volume = 0;    }
+    const p = a.play();
+    if(p && p.then){
+        p.then(()=>{ bgmPlaying = true; _setBgmUI(true); })
+         .catch(()=>{ bgmPlaying = false; _setBgmUI(false); });
+    }
+}
+function unlockBgmWithSound(){
+    const a = _bgmEl(); if(!a) return;
+    if(bgmUnlocked) return;
+    bgmUnlocked = true;
+    a.muted = false; a.volume = 0.35;
+    const p = a.play();
+    if(p && p.then){
+        p.then(()=>{ bgmPlaying = true; _setBgmUI(true); })
+         .catch(()=>{ bgmPlaying = false; _setBgmUI(false); });
+    }
+}
+function toggleBgm(){
+    const a = _bgmEl(); if(!a) return;
+    unlockBgmWithSound();
+    if(bgmPlaying || !a.paused){ a.pause(); bgmPlaying = false; _setBgmUI(false); }
+    else { a.muted = false; a.volume = 0.35; a.play(); bgmPlaying = true; _setBgmUI(true); }
+}
+// 1) 桌面尝试直接有声播放；2) 移动端首次以静音方式启动（成功率高），等交互后 unmute
+setTimeout(() => tryPlayBgm({withSound:false}), 100);
+setTimeout(() => tryPlayBgm({withSound:true}),  800);
+// 任何用户交互立刻解锁有声播放
+['touchstart','click','scroll','keydown','pointerdown'].forEach(ev=>
+    document.addEventListener(ev, unlockBgmWithSound, {once:true, passive:true}));
+// 切回前台再试一次
+document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'visible' && bgmUnlocked) tryPlayBgm();
+});
+
+/* ===== AI 客服 FAQ 机器人 ===== */
+const FAQ_LIST = [
+ {k:['阿聪','阿城','小戴','闽龙','蜜源','蜂蜜','农场','阿龙汉格格','教练','跟团','体验团','买鱼','海鲜','学冲浪','潜水','海钓'], a:'🤝 我们有「营地好伙伴」：<br>🦀 <b>阿聪赶海</b>——礁石区赶海体验，装备齐全<br>🏄 <b>阿城冲浪</b>——冲浪教学，长浪线最适合入门<br>🤿 <b>小戴潜水钓鱼</b>——浮潜、海钓一条龙<br>🐉 <b>闽龙</b>——整美村本地视频号，点卡片直接看<br>🍯 <b>蜜原生态农场</b>——阿龙汉格格的农场，扫二维码关注影音号<br><br>详情可以看页面下方的「营地好伙伴」卡片，或拨打客服专线 '+HOTLINE+' 预约～'},
+ {k:['闽龙的视频号','闽南闽龙','闽龙是谁','闽龙','整美村','闽南'], a:'🐉 <b>闽龙</b>是整美村的本地视频号，记录着闽南人情味与海的故事。<br>点页面下方「营地好伙伴」里的闽龙卡片，就能直接打开他的视频号唷～'},
+ {k:['蜜原生态农场','蜜原生态农场','阿龙汉格格','蜜源','蜂蜜','农场'], a:'🍯 <b>蜜原生态农场</b>是阿龙汉格格的农场，关注影音号看农场四季。<br>点页面下方「营地好伙伴」里的蜜源卡片，会弹出二维码，用微信扫一扫就能关注～'},
+ {k:['鱼骨','沙洲'], a:'🐟 鱼骨沙洲是限时的礼物——退潮（干潮前后约1小时）才会从海里浮现，走上沙洲就像走在海中央！<br><br>今天鱼骨沙洲黄金时段：'+SANDBAR_WIN+'<br>出发前看一眼页面上的「今日潮汐时刻」，就不会扑空啦～'},
+ {k:['几点退潮','退潮','涨潮','满潮','干潮','潮汐','潮水','几点涨','潮'], a:'📅 今天（'+DATE_TXT+'）的潮汐：<br>'+TODAY_TIDES_TXT+'<br><br>🐚 鱼骨沙洲黄金时段：'+SANDBAR_WIN+'<br>🦀 夜赶海抓螃蟹：'+CRAB_WIN+'<br><br>退潮看沙洲、涨潮玩白浪，行程照着潮汐排就对了～'},
+ {k:['赶海','螃蟹','抓蟹','挖螺','捡海货'], a:'🦀 赶海抓螃蟹的最佳时段是晚上 19:00–21:30！螃蟹是夜行性动物，傍晚退潮后海岸线变宽，正是它们出没的时候。<br><br>今晚推荐时段：'+CRAB_WIN+'<br>记得带：小桶、小铲、防滑鞋和头灯唷～<br><br>农历初一十五前后天文大潮最肥，可以看页面下方的「大潮赶海日历」！'},
+ {k:['营业','开业','开门','重开','开了吗','营业吗','能去吗','现在能','什么时候开','进场','倒闭','倒了','关门','停业','还开着','不干了'], a:'🌅 营地目前整修升级中，预计 2027 年 4 月重新开张。之前因政府公共工程建设暂停约一年，不是经营问题唷～<br><br>现在可以先收藏这个页面，每天看潮汐和日落排行程；重开后我们会第一时间在这里公告！'},
+ {k:['住宿','民宿','帐篷','订房','过夜','住一晚','房型'], a:'🏕️ 营地有十几间高档海边民宿和野奢帐篷，拉开窗帘就是海。<br>目前整修中暂未开放预订，预计 2027 年 4 月重开后上线。<br><br>想第一时间收到开订通知，可以拨打客服专线 '+HOTLINE+' 留个联系方式～'},
+ {k:['地址','在哪','怎么去','交通','导航','位置','路线','开车','停车','距离','住哪','gps','GPS','定位'], a:'📍 营地位于福建省漳州市漳浦县前亭镇整美村（火山岛地质公园一带）。<br>从厦门、漳州、泉州自驾约 1–2 小时。<br><b>最快方式：点页面顶部的「📍 一键导航到营地」按钮</b>，高德/百度/腾讯任选，装了地图 App 会直接唤起导航～<br>也可以在地图 App 里搜「hilive落日营地」。<br><br>营地占地 40 亩临海，有停车区域，重开后收费细则会一并公布。'},
+ {k:['亲子','小孩','孩子','儿童','宝宝','带娃','安全','几岁'], a:'👨‍👩‍👧 超适合亲子！营地有政府新建的防波堤，围出一片平静内湾——外浪被挡住、水深只到膝盖，是小朋友戏水和桨板新手的天然安全池。<br><br>海上活动请听从教练安排、穿好救生衣，家长看管好小朋友唷～'},
+ {k:['价格','多少钱','收费','门票','贵不贵','费用','团购','套餐','抖音'], a:'💰 营地整修中，门票和套餐价格还没公布，预计 2027 年 4 月重开后上线。<br>抖音上有我们的品牌页（搜「漳浦 hilive 落日营地」），使用规则以页面说明为准。<br><br>想第一时间收到消息，可以拨打客服专线 '+HOTLINE+'～'},
+ {k:['电话','联系','人工','客服','投诉','找人','热线'], a:'☎️ 客服专线：'+HOTLINE+'<br>营业时间都有真人客服为您服务。也可以把问题告诉我，能答的我都会尽力答～'},
+ {k:['天气','台风','下雨','风大','冷','热'], a:'🌦️ 沿海天气多变：阴天、起雾时拍照效果会打折；台风季（7–9月）和冬季风大时体验会受影响。<br><br>建议看天气择日再来——海边的美景，值得等一个好天气！'},
+ {k:['日落','夕阳','晚霞','几点天黑'], a:'🌇 今天日落 '+SUNSET+'！营地朝西面海无遮挡，太阳会直接沉进海平面。<br><br>建议提前 90 分钟到西边海滩占好位置——白浪配夕阳，是全场最值得等的一幕！'},
+ {k:['摩托艇','海上项目','浮台','独木舟','桨板','冲浪','玩水','白浪','海上'], a:'🚤 海上项目有：摩托艇、冲锋艇、30 米海上浮台（桨板／戏水平台）、独木舟。<br><br>涨潮时会出现整片白浪浅水区——水浅浪缓，戏水天堂；防波堤内湾全天适合亲子桨板。开放后依当天风浪安排，安全第一唷！'},
+ {k:['篝火','烟花','电影','晚上','夜里','夜生活'], a:'🎆 夜场体验：篝火、露天电影、烟花，天黑后陆续登场（现场安排为准）。<br><br>也可以搭配 '+CRAB_WIN+' 的夜赶海，先抓螃蟹再回来看电影，一晚两种快乐～'},
+ {k:['宠物','狗','猫','毛小孩'], a:'🐶 宠物政策目前还在确认中。建议出发前先拨打客服专线 '+HOTLINE+' 确认，免得毛小孩扑空～'},
+ {k:['大潮','初一','十五','潮差','最肥'], a:'🌊 农历初一、十五前后是天文大潮，赶海最肥！页面下方有「大潮·渔汛日历」，近期大潮日都标出来了。<br><br>想收大潮提醒？点页面下方的「🎣 大潮钓鱼提醒订阅」留下手机号，或扫码加阿龙微信，大潮日前一晚通知您～'},
+];
+
+function botReply(q){
+    const s = q.toLowerCase();
+    let best = null, bestScore = 0;
+    FAQ_LIST.forEach(f=>{
+        let sc = 0;
+        f.k.forEach(k=>{ if(s.indexOf(k.toLowerCase()) > -1) sc += k.length; });   // 关键词越长越具体，得分越高
+        if(sc > bestScore){ bestScore = sc; best = f; }
+    });
+    if(best) return best.a;
+    return '这个问题有点考倒我了 🙈<br>建议拨打客服专线：<b>'+HOTLINE+'</b><br>或点击下方绿色号码直接拨打，真人客服马上为您服务～';
+}
+
+function addMsg(content, who){
+    const body = document.getElementById('chatBody');
+    const d = document.createElement('div');
+    d.className = 'msg ' + who;
+    if(who === 'bot') d.innerHTML = content; else d.textContent = content;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+}
+
+function sendChat(){
+    const inp = document.getElementById('chatInput');
+    const q = inp.value.trim();
+    if(!q) return;
+    addMsg(q, 'user');
+    inp.value = '';
+    setTimeout(()=>addMsg(botReply(q), 'bot'), 400);
+}
+
+function toggleChat(){
+    const p = document.getElementById('chatPanel');
+    p.classList.toggle('open');
+    if(p.classList.contains('open') && !p.dataset.hi){
+        addMsg('您好呀～我是落日营地的 AI 客服小助手 🌅<br>潮汐、鱼骨沙洲、赶海、住宿、交通都可以问我！<br>点下面的快捷问题，或直接打字～', 'bot');
+        p.dataset.hi = '1';
+    }
+}
+
+const CHIP_QS = ['今天几点退潮？','鱼骨沙洲看得到吗？','营地开业了吗？','怎么去营地？','住宿可以订吗？','今天日落几点？'];
+CHIP_QS.forEach(q=>{
+    const b = document.createElement('div');
+    b.className = 'chip'; b.textContent = q;
+    b.onclick = ()=>{ document.getElementById('chatInput').value = q; sendChat(); };
+    document.getElementById('chips').appendChild(b);
+});
+
+function pad(n){return String(n).padStart(2,'0')}
+function toMin(t){const[a,b]=t.split(':').map(Number);return a*60+b}
+
+function updateStatus(){
+    if(!TIDES.length){ const a=document.getElementById('nowState'); if(a){a.textContent='载入中…';} const b=document.getElementById('nextTide'); if(b){b.innerHTML='正在获取实时潮汐…';} return; }
+    const now = new Date();
+    const mins = now.getHours()*60 + now.getMinutes();
+    document.getElementById('nowTime').textContent = '现在时间 ' + pad(now.getHours())+':'+pad(now.getMinutes());
+    const sorted = [...TIDES].sort((a,b)=>toMin(a.time)-toMin(b.time));
+    let prev=null, next=null;
+    for(let i=0;i<sorted.length;i++){
+        if(toMin(sorted[i].time) > mins){ next=sorted[i]; prev=sorted[i-1]||sorted[sorted.length-1]; break; }
+    }
+    if(!next){ next=sorted[0]; prev=sorted[sorted.length-1]; }
+    const state = prev.type==='high' ? ['退潮中','ebbing','潮水正在退去'] : ['涨潮中','rising','潮水正在上涨'];
+    const el = document.getElementById('nowState');
+    el.textContent = state[0]; el.className = 'status-state ' + state[1];
+    const diff = toMin(next.time)-mins;
+    const h = Math.floor(diff/60), m = diff%60;
+    document.getElementById('nextTide').innerHTML =
+        `下一站：<b>${next.type==='high'?'🌊 满潮':'🐚 干潮'} ${next.time}</b>（${h>0?h+'小时':''}${m}分钟后）· ${state[2]}`;
+}
+
+function drawChart(){
+    const svg = document.getElementById('tideChart');
+    if(!Object.keys(HOURLY).length){ svg.innerHTML='<text x="220" y="100" font-size="12" fill="#A8B3BE" text-anchor="middle">正在获取实时潮汐曲线…</text>'; return; }
+    const W=440, H=200, PL=34, PR=10, PT=14, PB=22;
+    const hours=[...Array(24).keys()];
+    const vals=hours.map(h=>HOURLY[pad(h)+':00'] ?? null);
+    const real=vals.filter(v=>v!==null);
+    const vMin=Math.min(...real)-20, vMax=Math.max(...real)+20;
+    const x=h=>PL+(h/23)*(W-PL-PR);
+    const y=v=>PT+(1-(v-vMin)/(vMax-vMin))*(H-PT-PB);
+    let s='';
+    // 黄昏色渐变（帆船用）
+    s+=`<defs><linearGradient id="sailG" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FFD97D"/><stop offset=".55" stop-color="#FEB47B"/><stop offset="1" stop-color="#FF7E5F"/>
+        </linearGradient></defs>`;
+    // 网格与Y轴
+    for(let g=0;g<=3;g++){
+        const v=vMin+(vMax-vMin)*g/3;
+        s+=`<line x1="${PL}" y1="${y(v)}" x2="${W-PR}" y2="${y(v)}" stroke="#EDF2F7" stroke-width="1"/>`;
+        s+=`<text x="${PL-6}" y="${y(v)+3}" font-size="9" fill="#A8B3BE" text-anchor="end">${Math.round(v/100*10)/10}m</text>`;
+    }
+    for(let h=0;h<=23;h+=4){
+        s+=`<text x="${x(h)}" y="${H-6}" font-size="9" fill="#A8B3BE" text-anchor="middle">${pad(h)}时</text>`;
+    }
+    // 平滑曲线（Catmull-Rom转贝塞尔）
+    const pts=hours.filter(h=>vals[h]!==null).map(h=>[x(h),y(vals[h])]);
+    let d=`M ${pts[0][0]},${pts[0][1]}`;
+    for(let i=0;i<pts.length-1;i++){
+        const p0=pts[Math.max(0,i-1)], p1=pts[i], p2=pts[i+1], p3=pts[Math.min(pts.length-1,i+2)];
+        const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+        const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+        d+=` C ${c1x},${c1y} ${c2x},${c2y} ${p2[0]},${p2[1]}`;
+    }
+    s+=`<path d="${d} L ${W-PR},${H-PB} L ${PL},${H-PB} Z" fill="rgba(27,107,147,.10)"/>`;
+    s+=`<path d="${d}" fill="none" stroke="#1B6B93" stroke-width="2.5" stroke-linecap="round"/>`;
+    // 高低潮标记
+    TIDES.forEach(t=>{
+        const [hh,mm]=t.time.split(':').map(Number);
+        if(vals[hh]===undefined||vals[hh]===null)return;
+        const cx=x(hh+mm/60), cy=y(vals[hh]);
+        const col=t.type==='high'?'#1B6B93':'#FF7E5F';
+        s+=`<circle cx="${cx}" cy="${cy}" r="4.5" fill="${col}" stroke="#fff" stroke-width="2"/>`;
+        s+=`<text x="${cx}" y="${cy-10}" font-size="9.5" font-weight="700" fill="${col}" text-anchor="middle">${t.time} ${t.type==='high'?'满':'干'}</text>`;
+    });
+    // 当前时间：小浣熊指路 🦝
+    const now=new Date();
+    const nowH=now.getHours()+now.getMinutes()/60;
+    const nx=x(nowH);
+    const h0=Math.floor(nowH), h1=Math.min(23,h0+1);
+    const v0=vals[h0], v1=(vals[h1]!==null&&vals[h1]!==undefined)?vals[h1]:v0;
+    const vNow=v0+(v1-v0)*(nowH-h0);
+    const ny=y(vNow);
+    const sortedT=[...TIDES].sort((a,b)=>toMin(a.time)-toMin(b.time));
+    const minsNow=now.getHours()*60+now.getMinutes();
+    let prevT=sortedT[sortedT.length-1];
+    sortedT.forEach(t=>{ if(toMin(t.time)<=minsNow) prevT=t; });
+    const rising=prevT.type==='low';
+    const label=rising?'涨潮中 🌊':'退潮中 🐚';
+    // 目标点（浣熊指的点）
+    s+=`<circle cx="${nx}" cy="${ny}" r="5.5" fill="#22C55E" stroke="#fff" stroke-width="2.5"/>`;
+    s+=`<circle cx="${nx}" cy="${ny}" r="2" fill="#fff"/>`;
+    // X轴当前时间小三角
+    s+=`<path d="M ${nx} ${H-PB+2} l -4 5 l 8 0 Z" fill="#22C55E"/>`;
+    // 绿色指示牌出场
+    s+=drawSign(nx, ny, label);
+    // 黄昏色小帆船（浮在当前潮位上）
+    s+=drawBoat(nx, ny);
+    svg.innerHTML=s;
+}
+
+function drawBoat(px, py){
+    const W=440, PR=10;
+    let bx = px + 26;                       // 曲线点右边一点点
+    if (bx > W - PR - 18) bx = px - 26;     // 贴右边界时改放左边
+    let g=`<g transform="translate(${bx},${py})"><g>`;
+    g+=`<animateTransform attributeName="transform" type="translate" values="0,0; 0,-2.5; 0,0" dur="2.8s" repeatCount="indefinite"/>`;
+    // 水波
+    g+=`<path d="M -22,3 Q -17,0.5 -12,3 T -2,3" fill="none" stroke="#7FC8E8" stroke-width="1.5" stroke-linecap="round" opacity=".85"/>`;
+    g+=`<path d="M 4,3 Q 9,0.5 14,3 T 24,3" fill="none" stroke="#7FC8E8" stroke-width="1.5" stroke-linecap="round" opacity=".85"/>`;
+    // 船身
+    g+=`<path d="M -15,-2 Q 0,7 15,-2 L 11,-7 L -11,-7 Z" fill="#C97B4A" stroke="#A05E36" stroke-width="1.5" stroke-linejoin="round"/>`;
+    g+=`<line x1="-9" y1="-4.5" x2="9" y2="-4.5" stroke="#A05E36" stroke-width="1" opacity=".45"/>`;
+    // 桅杆
+    g+=`<line x1="0" y1="-7" x2="0" y2="-30" stroke="#8A5A33" stroke-width="2" stroke-linecap="round"/>`;
+    // 黄昏色渐变帆
+    g+=`<path d="M 2.5,-28 Q 15,-17 11,-9 L 2.5,-9 Z" fill="#FFD97D" stroke="#FF7E5F" stroke-width="1.2" stroke-linejoin="round"/>`;
+    g+=`<path d="M 2.5,-28 Q 15,-17 11,-9 L 2.5,-9 Z" fill="url(#sailG)"/>`;
+    // 船尾小旗
+    g+=`<path d="M 0,-30 L 6,-27.5 L 0,-25 Z" fill="#FF4B2B"/>`;
+    g+=`</g></g>`;
+    return g;
+}
+
+function drawSign(px, py, label){
+    // 🟢 绿色指示牌：位于曲线点左上方，箭头指向当前潮位
+    const W=440, PL=34, PR=10, PT=14, PB=22;
+    const sw=96, sh=26;
+    let sx = px - sw - 22;                                // 默认放在左边
+    if (sx < PL + 4) sx = Math.min(px + 22, W - PR - sw);
+    const leftSide = (sx + sw < px - 6);
+    let sy = py - sh - 24, above = true;                  // 默认放上方
+    if (sy < PT + 4) { sy = py + 24; above = false; }
+    let g='';
+    const ex = leftSide ? sx + sw : sx;
+    const ey = above ? sy + sh : sy;
+    g+=`<line x1="${ex}" y1="${ey}" x2="${px}" y2="${above ? py-8 : py+8}" stroke="#22C55E" stroke-width="2" stroke-dasharray="4 3"/>`;
+    if (above) g+=`<path d="M ${px} ${py-5} l -5 -8 l 10 0 Z" fill="#22C55E"/>`;
+    else       g+=`<path d="M ${px} ${py+5} l -5 8 l 10 0 Z" fill="#22C55E"/>`;
+    g+=`<rect x="${sx}" y="${sy}" width="${sw}" height="${sh}" rx="13" fill="#22C55E" stroke="#fff" stroke-width="2"/>`;
+    g+=`<text x="${sx + sw/2}" y="${sy + 17.5}" font-size="13" fill="#fff" text-anchor="middle" font-weight="800">${label}</text>`;
+    return g;
+}
+
+
+/* ===== 欢迎弹窗 · 真人录音优先 / TTS 备用 ===== */
+let _useTtsMode = false;
+const _wa = () => document.getElementById('welcomeAudio');
+const _wp = () => document.getElementById('voiceProgress');
+const _wbar = () => _wp() ? _wp().firstElementChild : null;
+const _wbtn = () => document.getElementById('welcomePlayBtn');
+const _wtip = () => document.getElementById('welcomeVoiceTip');
+
+function playWelcomeVoice(){
+    if(_useTtsMode){ playTts(); return; }
+    const a = _wa();
+    if(!a || !a.src || a.src === window.location.href){
+        _showTip('⚠️ 录音未加载，请改用语音合成');
+        return;
+    }
+    // 用户首次点击 = 自动播放合规解锁，顺便尝试同时启动 BGM
+    const p = a.play();
+    if(p && p.then){
+        p.then(()=>{
+            _setBtnState('playing');
+            _showTip('');
+        }).catch(()=>{
+            _showTip('📱 当前浏览器拦截了自动播放，请再点一次按钮');
+            // 把按钮文案改成「再点一次」，给用户第二次机会
+            if(_wbtn()) _wbtn().textContent = '🔊 再点一次播放';
+        });
+    }
+    // 进度条更新
+    a.ontimeupdate = () => {
+        if(!a.duration) return;
+        const pct = (a.currentTime / a.duration) * 100;
+        if(_wbar()) _wbar().style.width = pct + '%';
+    };
+    a.onended = () => {
+        _setBtnState('ended');
+        if(_wbar()) _wbar().style.width = '100%';
+    };
+    a.onerror = () => {
+        _showTip('⚠️ 录音加载失败，自动改用语音合成');
+        _useTtsMode = true;
+        playTts();
+    };
+}
+
+function _setBtnState(state){
+    const btn = _wbtn();
+    if(!btn) return;
+    if(state === 'playing'){
+        btn.innerHTML = '⏸ 正在播放阿龙介绍…';
+    } else if(state === 'paused'){
+        btn.innerHTML = '▶️ 继续收听';
+    } else if(state === 'ended'){
+        btn.innerHTML = '🔁 再听一次阿龙介绍';
+    }
+}
+
+function _showTip(msg){
+    const t = _wtip();
+    if(!t) return;
+    if(msg){ t.textContent = msg; t.classList.add('show'); }
+    else { t.classList.remove('show'); }
+}
+
+function toggleTts(){
+    const a = _wa();
+    if(a && !a.paused){ a.pause(); _setBtnState('paused'); }
+    _useTtsMode = !_useTtsMode;
+    if(_wbtn()) _wbtn().textContent = _useTtsMode ? '▶️ 收听语音合成' : '▶️ 收听阿龙介绍';
+    _showTip('');
+}
+
+function playTts(){
+    const text = document.getElementById('voiceText').textContent.trim();
+    if(!('speechSynthesis' in window)){ _showTip('⚠️ 此设备不支持语音合成，请直接阅读下方文字'); return; }
+    try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'zh-CN';
+        u.rate = 0.95; u.pitch = 1.05;
+        const v = (window.speechSynthesis.getVoices() || []).find(v => /zh|cmn|mandarin/i.test(v.lang + v.name));
+        if(v) u.voice = v;
+        u.onend = () => { if(_wbtn()) _wbtn().textContent = '▶️ 再听一次'; };
+        window.speechSynthesis.speak(u);
+        if(_wbtn()) _wbtn().textContent = '⏸ 语音合成朗读中…';
+    } catch(e){ _showTip('⚠️ 语音合成失败，请直接阅读下方文字'); }
+}
+
+function closeWelcome(){
+    const overlay = document.getElementById('welcomeOverlay');
+    overlay.classList.remove('show');
+    if(document.getElementById('noMoreWelcome').checked){
+        try{ localStorage.setItem('hi_welcome_v2', Date.now()); } catch(e){}
+    }
+}
+function shouldShowWelcome(){
+    try{
+        const closed = localStorage.getItem('hi_welcome_v2');
+        if(!closed) return true;
+        // 一周内不再打扰
+        return (Date.now() - parseInt(closed)) > 7*24*60*60*1000;
+    } catch(e){ return true; }
+}
+if(shouldShowWelcome()){
+    setTimeout(()=>{ document.getElementById('welcomeOverlay').classList.add('show'); }, 600);
+}
+
+/* ===== 大潮钓鱼订阅 ===== */
+function submitFishingSub(){
+    const name = document.getElementById('fishName').value.trim();
+    const phone = document.getElementById('fishPhone').value.trim();
+    const type = document.getElementById('fishType').value;
+    const note = document.getElementById('fishNote').value.trim();
+    if(!name || !phone){ alert('请填写称呼和手机号，方便阿龙联系您'); return; }
+    if(!/^1\d{10}$/.test(phone)){ alert('手机号格式不对唷'); return; }
+    const data = {name, phone, type, note, date: new Date().toLocaleString('zh-CN')};
+    try{
+        let list = JSON.parse(localStorage.getItem('hi_fishing_subs') || '[]');
+        list.push(data);
+        localStorage.setItem('hi_fishing_subs', JSON.stringify(list));
+    } catch(e){}
+    // 同时弹出加微信二维码（方便阿龙后续主动加）
+    showQR('assets/img2.jpg', '添加阿龙微信');
+    document.getElementById('fishForm').style.display='none';
+    document.getElementById('fishDone').style.display='block';
+}
+function checkFishingSub(){
+    try{
+        if(localStorage.getItem('hi_fishing_subs')){
+            document.getElementById('fishForm').style.display='none';
+            document.getElementById('fishDone').style.display='block';
+        }
+    } catch(e){}
+}
+checkFishingSub();
+
+function copyMsg(){
+    // 用隐藏的 textarea 取纯文本，避免 innerText 在微信内置浏览器里被污染
+    let text = '';
+    const plain = document.getElementById('msgBoxPlain');
+    if(plain){
+        text = plain.value;
+    } else {
+        const box = document.getElementById('msgBox');
+        if(box) text = box.innerText || box.textContent || '';
+    }
+    if(!text){
+        showCopyTip('复制失败，请手动长按上方「晨报文案」区块');
+        return;
+    }
+
+    // 1) 先尝试 navigator.clipboard（标准浏览器会成功）
+    if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(
+            () => showCopyTip('✓ 已复制，去微信粘贴'),
+            () => tryExecCopy(text)
+        );
+    } else {
+        tryExecCopy(text);
+    }
+}
+
+function tryExecCopy(text){
+    // 2) Fallback：临时 textarea + execCommand
+    try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.setAttribute('readonly', '');
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(ok){ showCopyTip('✓ 已复制，去微信粘贴'); return; }
+    } catch(e){}
+    // 3) 终极方案：弹层让用户长按复制（微信内置永远可用）
+    showCopyOverlay(text);
+}
+
+function showCopyTip(msg){
+    const t = document.getElementById('toast');
+    if(!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function showCopyOverlay(text){
+    // 移除已存在的
+    const old = document.getElementById('copyOverlay');
+    if(old) old.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'copyOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:300;display:flex;align-items:center;justify-content:center;padding:18px;';
+    overlay.onclick = (e) => { if(e.target===overlay) overlay.remove(); };
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#fff;border-radius:18px;padding:18px;width:100%;max-width:380px;max-height:80vh;display:flex;flex-direction:column;';
+    const title = document.createElement('div');
+    title.textContent = '📋 长按下方文字全选复制';
+    title.style.cssText = 'font-size:15px;font-weight:800;color:#2B3A4A;text-align:center;margin-bottom:12px;';
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.readOnly = true;
+    ta.style.cssText = 'width:100%;flex:1;min-height:260px;border:1.5px dashed #C9D8E4;border-radius:12px;padding:14px;font-size:14px;line-height:1.8;color:#33475C;background:#FAFCFE;resize:none;font-family:inherit;';
+    const tip = document.createElement('div');
+    tip.textContent = '💡 长按文字 → 全选 → 复制，然后关闭弹窗去微信粘贴';
+    tip.style.cssText = 'font-size:11.5px;color:#8A97A5;text-align:center;margin-top:10px;line-height:1.6;';
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '关闭';
+    closeBtn.style.cssText = 'margin-top:14px;padding:10px;border:none;border-radius:14px;background:#1B6B93;color:#fff;font-size:13px;font-weight:700;cursor:pointer;';
+    closeBtn.onclick = () => overlay.remove();
+    box.appendChild(title); box.appendChild(ta); box.appendChild(tip); box.appendChild(closeBtn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    // 自动全选（让用户直接 Cmd/Ctrl+C）
+    setTimeout(() => { ta.focus(); ta.select(); }, 100);
+}
+
+updateStatus(); drawChart();
+setInterval(()=>{ updateStatus(); drawChart(); }, 60000);
+</script>
+
+<script>
+/* ===== 实时数据模块（外部文件 live.js 内联） ===== */
+/* ============================================================================
+   HI LIVE 半岛落日营地 · 实时数据模块 v1.0
+   2026-10-21 添加（小馨）
+   ---------------------------------------------------------------------------
+   原来页面上的潮汐、天气、日落、农历全部是生成当天写死的快照，
+   时间一过就全错。这个模块改成每次打开都去取当天真实数据。
+
+   数据源：
+     · 潮汐     openwaters.io（TICON-4 数据集，CC BY 4.0，免 key，CORS 开放）
+                最近站点：厦门站，距营地约 33 公里
+     · 天气/日落 open-meteo.com（免 key，CORS 开放）
+
+   原则：**取不到就明说取不到，绝不拿旧数据冒充今天的。**
+   ============================================================================ */
+
+var CAMP_LAT = 24.161903, CAMP_LON = 117.979137;
+var SURF_WIN = '—', BOARD_WIN = '—';
+var DATA_AT = null;          // 这次数据的更新时间
+var LIVE_OK = false;
+
+function _p2(n){ return (n < 10 ? '0' : '') + n; }
+function _fmtT(d){ return _p2(d.getHours()) + ':' + _p2(d.getMinutes()); }
+function _ymd(d){ return d.getFullYear() + '-' + _p2(d.getMonth() + 1) + '-' + _p2(d.getDate()); }
+function _dayAdd(d, n){ var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+
+/* ---------- 农历日（只算「日」，页面本来也只显示日） ---------- */
+function lunarDayOf(d){
+    var K = Date.UTC(2000, 0, 6, 18, 14);      /* 已知朔时刻 */
+    var S = 29.530588853;                      /* 朔望月长度 */
+    var mid = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
+    var a = ((mid.getTime() - K) / 86400000) % S;
+    if (a < 0) a += S;
+    return Math.min(30, Math.floor(a) + 1);
+}
+function lunarText(n){
+    var c = ['零','一','二','三','四','五','六','七','八','九'];
+    if (n === 10) return '初十';
+    if (n === 20) return '二十';
+    if (n === 30) return '三十';
+    if (n < 10) return '初' + c[n];
+    if (n < 20) return '十' + c[n - 10];
+    return '廿' + c[n - 20];
+}
+
+/* ---------- 潮型（按当日潮差，厦门站实测范围 2.9–5.7 米） ---------- */
+function tideTypeOf(cm){
+    if (cm >= 500) return { name: '大潮', cls: 'p-big' };
+    if (cm >= 400) return { name: '中潮', cls: 'p-mid' };
+    return { name: '小潮', cls: 'p-small' };
+}
+
+/* ---------- 风向 / 天气码 ---------- */
+var DIRS = ['北','东北','东','东南','南','西南','西','西北'];
+function windDir(deg){ return DIRS[Math.round(((deg % 360) / 45)) % 8]; }
+
+function wxText(code){
+    var M = {
+        0: ['☀️','晴'], 1: ['🌤️','晴间多云'], 2: ['⛅','多云'], 3: ['☁️','阴天'],
+        45: ['🌫️','有雾'], 48: ['🌫️','雾凇'],
+        51: ['🌦️','小毛雨'], 53: ['🌦️','毛雨'], 55: ['🌧️','密毛雨'],
+        56: ['🌧️','冻毛雨'], 57: ['🌧️','冻毛雨'],
+        61: ['🌦️','小雨'], 63: ['🌧️','中雨'], 65: ['🌧️','大雨'],
+        66: ['🌧️','冻雨'], 67: ['🌧️','冻雨'],
+        71: ['🌨️','小雪'], 73: ['🌨️','中雪'], 75: ['❄️','大雪'], 77: ['❄️','雪粒'],
+        80: ['🌦️','阵雨'], 81: ['🌧️','强阵雨'], 82: ['⛈️','暴雨'],
+        85: ['🌨️','阵雪'], 86: ['❄️','强阵雪'],
+        95: ['⛈️','雷阵雨'], 96: ['⛈️','雷雨伴冰雹'], 99: ['⛈️','强雷雨']
+    };
+    return M[code] || ['🌡️','—'];
+}
+
+/* ---------- 取潮汐 ---------- */
+function fetchTide(){
+    var now = new Date();
+    var s = _dayAdd(now, -2), e = _dayAdd(now, 9);   /* 前后各留两天，防止跨日/曲线端点漏数据 */
+    var u = 'https://api.openwaters.io/tides/extremes?latitude=' + CAMP_LAT
+          + '&longitude=' + CAMP_LON
+          + '&start=' + _ymd(s) + '&end=' + _ymd(e) + '&units=meters';
+    return fetch(u, { cache: 'no-store' }).then(function(r){
+        if (!r.ok) throw new Error('潮汐接口 HTTP ' + r.status);
+        return r.json();
+    }).then(function(j){
+        if (!j.extremes || !j.extremes.length) throw new Error('潮汐数据为空');
+        return j.extremes.map(function(x){
+            var t = new Date(x.time);
+            return {
+                when: t,
+                time: _fmtT(t),
+                type: x.high ? 'high' : 'low',
+                cm: Math.round(x.level * 100)
+            };
+        }).sort(function(a, b){ return a.when - b.when; });
+    });
+}
+
+/* ---------- 取天气 + 日落 ---------- */
+function fetchWx(){
+    var u = 'https://api.open-meteo.com/v1/forecast?latitude=' + CAMP_LAT
+          + '&longitude=' + CAMP_LON
+          + '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code'
+          + '&daily=sunset&timezone=Asia%2FShanghai&forecast_days=8';
+    return fetch(u, { cache: 'no-store' }).then(function(r){
+        if (!r.ok) throw new Error('天气接口 HTTP ' + r.status);
+        return r.json();
+    });
+}
+
+/* ---------- 任意时刻潮高（相邻两个极值之间余弦插值） ---------- */
+function levelAt(ev, t){
+    if (!ev.length) return 0;
+    if (ev.length === 1) return ev[0].cm;
+    var last = ev[ev.length - 1];
+    /* 数据范围之外：沿首/末两段的斜率线性外推，绝不画成水平直线 */
+    if (t <= ev[0].when){
+        var dt = ev[1].when - ev[0].when;
+        if (dt <= 0) return ev[0].cm;
+        var k = (ev[1].cm - ev[0].cm) / dt;
+        return Math.max(0, ev[0].cm + k * (t - ev[0].when));
+    }
+    if (t >= last.when){
+        var dt2 = last.when - ev[ev.length - 2].when;
+        if (dt2 <= 0) return last.cm;
+        var k2 = (last.cm - ev[ev.length - 2].cm) / dt2;
+        return Math.max(0, last.cm + k2 * (t - last.when));
+    }
+    for (var i = 0; i < ev.length - 1; i++){
+        var a = ev[i], b = ev[i + 1];
+        if (t >= a.when && t <= b.when){
+            var f = (t - a.when) / (b.when - a.when);
+            return a.cm + (b.cm - a.cm) * (1 - Math.cos(Math.PI * f)) / 2;
+        }
+    }
+    return last.cm;
+}
+
+/* ---------- 时间加减（分钟） ---------- */
+function _shift(hhmm, mins){
+    var a = hhmm.split(':').map(Number);
+    var t = a[0] * 60 + a[1] + mins;
+    t = ((t % 1440) + 1440) % 1440;
+    return _p2(Math.floor(t / 60)) + ':' + _p2(t % 60);
+}
+
+/* ============================================================================
+   主流程
+   ============================================================================ */
+function loadLiveData(){
+    var statusEl = document.getElementById('liveStatus');
+    if (statusEl) statusEl.textContent = '正在获取今天的潮汐与天气…';
+
+    Promise.all([fetchTide(), fetchWx()]).then(function(res){
+        var ev = res[0], wx = res[1];
+        DATA_AT = new Date();
+        LIVE_OK = true;
+        renderLive(ev, wx);
+        if (statusEl) statusEl.textContent = '🔄 实时数据 · 更新于 ' + _fmtT(DATA_AT);
+    }).catch(function(err){
+        LIVE_OK = false;
+        console.error('[实时数据]', err);
+        if (statusEl) statusEl.textContent = '⚠️ 实时数据暂时取不到，请稍后刷新，或直接致电 ' + HOTLINE;
+        _showDataFail();
+    });
+}
+
+function _showDataFail(){
+    var grid = document.querySelector('.tide-grid');
+    if (grid) grid.innerHTML = '<div style="grid-column:1/-1;padding:22px 16px;text-align:center;' +
+        'font-size:13.5px;line-height:1.8;color:#8A97A5;">' +
+        '潮汐数据暂时取不到<br>请刷新页面，或致电 <b style="color:#1B6B93">' + HOTLINE + '</b> 问今天的潮水</div>';
+    var t = document.querySelector('.weather-temp'); if (t) t.innerHTML = '--<span class="unit">°C</span>';
+    var d = document.querySelector('.weather-desc'); if (d) d.textContent = '数据获取中';
+    var tbl = document.querySelector('.week-card table');
+    if (tbl) tbl.innerHTML = '<tr><td style="padding:18px;text-align:center;color:#8A97A5;">' +
+        '预报暂时取不到，请刷新重试</td></tr>';
+
+    /* 下面这几处原来会留着旧日期的数据，必须一起清掉，免得拿昨天的数字骗今天的客人 */
+    var times = document.querySelectorAll('.show-time');
+    for (var i = 0; i < times.length; i++) times[i].textContent = '🕐 —';
+    var big = document.querySelector('.sunset-card .big'); if (big) big.textContent = '--:--';
+    var tt2 = document.getElementById('heroTideType'); if (tt2) tt2.textContent = '潮况—';
+    var ph = '⚠️ 今天的潮汐数据暂时取不到，请刷新页面重试，或直接致电 ' + HOTLINE + ' 问阿龙。';
+    var mb = document.getElementById('msgBox'); if (mb) mb.textContent = ph;
+    var mp = document.getElementById('msgBoxPlain'); if (mp) mp.value = ph;
+    var bd = document.getElementById('bigDayTxt'); if (bd) bd.innerHTML = '<b>近期大潮日：</b>数据获取中…';
+    var bd2 = document.getElementById('bigDayTxt2'); if (bd2) bd2.textContent = '近期大潮日数据获取中';
+}
+
+/* ============================================================================
+   今日晨报（客服群发版）—— 原来这段是一整块写死的文案，阿龙每天要复制发
+   到客服群，旧的日期数据会直接被发出去。这里改成按当天数据现生成。
+   ============================================================================ */
+function buildMorningReport(o){
+    var W = '日一二三四五六'.charAt(o.date.getDay());
+    var hiTxt = o.hi.map(function(x){ return x.time + '（' + (x.cm / 100).toFixed(1) + '米）'; }).join('／') || '—';
+    var loTxt = o.lo.map(function(x){ return x.time + '（' + (x.cm / 100).toFixed(1) + '米）'; }).join('／') || '—';
+
+    var lines = [];
+    lines.push('【🌅 HI LIVE 半岛落日营地潮汐晨报 · ' + (o.date.getMonth() + 1) + '月' + o.date.getDate() + '日 星期' + W + '】');
+    lines.push('');
+    lines.push('海边的风先起床了，今天的潮汐功课帮你做好啰 ☀️');
+    lines.push('');
+    lines.push('📅 农历' + o.lunar + ' ｜ ' + o.tideName + (o.tideNote ? '·' + o.tideNote : ''));
+    lines.push('');
+    lines.push('🌊 满潮：' + hiTxt);
+    lines.push('🐚 干潮：' + loTxt);
+    lines.push('');
+    lines.push('今日推荐：');
+    if (o.sandbar) lines.push('🐚 ' + o.sandbar + ' 鱼骨沙洲黄金时段');
+    if (o.surf)    lines.push('🏄 ' + o.surf + ' 白浪浅水玩水');
+    if (o.sunset)  lines.push('🌅 ' + o.boardWin + ' 落日桨板·日落观赏');
+    lines.push('');
+    lines.push('🏊 内湾亲子戏水全天开放，水浅安全放心玩');
+    lines.push('🌇 今晚日落 ' + o.sunset + '，别让眼睛错过');
+    lines.push('');
+    lines.push('');
+    lines.push('✨ 今日彩蛋：' + o.egg);
+    lines.push('');
+    lines.push('—— 潮汐站，每天清晨，潮汐先知道 🌊');
+    return lines.join('\n');
+}
+
+/* ---------- 把数据画到页面上 ---------- */
+function renderLive(ev, wx){
+    var now = new Date();
+    var today = _ymd(now);
+
+    /* --- 按本地日期分组 --- */
+    var byDay = {};
+    ev.forEach(function(x){
+        var k = _ymd(x.when);
+        (byDay[k] = byDay[k] || []).push(x);
+    });
+    var days = Object.keys(byDay).sort().filter(function(k){ return k >= today; }).slice(0, 7);
+    var tdy = byDay[today] || (days.length ? byDay[days[0]] : []);
+
+    var hi = tdy.filter(function(x){ return x.type === 'high'; });
+    var lo = tdy.filter(function(x){ return x.type === 'low'; });
+    var range = (hi.length && lo.length)
+        ? Math.max.apply(null, hi.map(function(x){ return x.cm; }))
+        - Math.min.apply(null, lo.map(function(x){ return x.cm; }))
+        : 0;
+    var tt = tideTypeOf(range);
+
+    /* --- 1. 顶部日期条 --- */
+    var e1 = document.getElementById('heroDate');
+    if (e1) e1.textContent = '📅 ' + now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
+    var e2 = document.getElementById('heroLunar');
+    if (e2) e2.textContent = '农历' + lunarText(lunarDayOf(now));
+    var e3 = document.getElementById('heroTideType');
+    if (e3) e3.textContent = tt.name + (range >= 500 ? '·活汛' : (range < 400 ? '·死汛' : ''));
+
+    /* --- 2. 天气卡 --- */
+    var cur = wx.current || {};
+    var wt = wxText(cur.weather_code);
+    var wTemp = document.querySelector('.weather-temp');
+    if (wTemp && typeof cur.temperature_2m === 'number')
+        wTemp.innerHTML = cur.temperature_2m.toFixed(1) + '<span class="unit">°C</span>';
+    var wDesc = document.querySelector('.weather-desc');
+    if (wDesc) wDesc.textContent = wt[0] + ' ' + wt[1];
+    var wVals = document.querySelectorAll('.weather-meta .val');
+    if (wVals.length >= 2){
+        if (typeof cur.relative_humidity_2m === 'number') wVals[0].textContent = cur.relative_humidity_2m + '%';
+        if (typeof cur.wind_speed_10m === 'number'){
+            var ms = (cur.wind_speed_10m / 3.6).toFixed(1);
+            wVals[1].textContent = ms + ' m/s ' + windDir(cur.wind_direction_10m || 0) + '风';
+        }
+    }
+
+    /* --- 3. 今日潮汐卡（最多四张，按时间排） --- */
+    var grid = document.querySelector('.tide-grid');
+    if (grid && tdy.length){
+        grid.innerHTML = tdy.slice(0, 4).map(function(t){
+            var isHigh = t.type === 'high';
+            return '<div class="tide-card ' + t.type + '">' +
+                '<div class="tc-label">' + (isHigh ? '🌊 满潮' : '🐚 干潮') + '</div>' +
+                '<div class="tc-time">' + t.time + '</div>' +
+                '<div class="tc-m">' + (t.cm / 100).toFixed(1) + '<span class="unit">米</span></div>' +
+                '<div class="tc-desc">' + (isHigh ? '白浪浅水登场' : '沙洲浮现·赶海好时机') + '</div>' +
+                '</div>';
+        }).join('');
+    }
+
+    /* --- 4. 潮汐曲线（今天 24 个整点） --- */
+    var H = {};
+    for (var hh = 0; hh < 24; hh++){
+        var base = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, 0, 0);
+        H[_p2(hh) + ':00'] = Math.round(levelAt(ev, base));
+    }
+    HOURLY = H;
+    TIDES = tdy.map(function(t){ return { time: t.time, type: t.type, cm: t.cm }; });
+
+    /* --- 5. 日落 --- */
+    var sunsetStr = (wx.daily && wx.daily.sunset && wx.daily.sunset[0]) ? wx.daily.sunset[0].slice(11, 16) : '--:--';
+    SUNSET = sunsetStr;
+    var sc = document.querySelector('.sunset-card .big');
+    if (sc) sc.textContent = sunsetStr;
+
+    /* --- 6. 未来七天表 --- */
+    var tbl = document.querySelector('.week-card table');
+    if (tbl && days.length){
+        var sunsets = (wx.daily && wx.daily.sunset) || [];
+        var rows = '<tr><th>日期</th><th>潮况</th><th>满潮／干潮</th><th>日落</th><th>主打</th></tr>';
+        days.forEach(function(k, i){
+            var evs = byDay[k] || [];
+            var d = new Date(k + 'T12:00:00');
+            var wk = '日一二三四五六'.charAt(d.getDay());
+            var h2 = evs.filter(function(x){ return x.type === 'high'; });
+            var l2 = evs.filter(function(x){ return x.type === 'low'; });
+            var rg = (h2.length && l2.length)
+                ? Math.max.apply(null, h2.map(function(x){ return x.cm; }))
+                - Math.min.apply(null, l2.map(function(x){ return x.cm; }))
+                : 0;
+            var t2 = tideTypeOf(rg);
+            var hiTxt = h2.map(function(x){ return x.time; }).join('／') || '—';
+            var loTxt = l2.map(function(x){ return x.time; }).join('／') || '—';
+            var ss = sunsets[i] ? sunsets[i].slice(11, 16) : '—';
+            var main = (t2.name === '大潮') ? '🎣 大潮日' : (l2.length ? '🐚 沙洲日' : '—');
+            rows += '<tr class="' + (i === 0 ? 'today-row' : '') + '">' +
+                '<td>' + (d.getMonth() + 1) + '/' + d.getDate() +
+                '<br><span class="sub">' + wk + '·' + lunarText(lunarDayOf(d)) + '</span></td>' +
+                '<td><span class="pill ' + t2.cls + '">' + t2.name + '</span></td>' +
+                '<td class="mono">🌊 ' + hiTxt + '<br>🐚 ' + loTxt + '</td>' +
+                '<td class="mono">' + ss + '</td>' +
+                '<td>' + main + '</td></tr>';
+        });
+        tbl.innerHTML = rows;
+    }
+
+    /* --- 7. 今日节目单（跟着潮水走） --- */
+    var bestLow = lo.slice().sort(function(a, b){ return a.cm - b.cm; })[0] || null;
+    var bestHigh = hi.slice().sort(function(a, b){ return b.cm - a.cm; })[0] || null;
+
+    /* 玩水要用白天的满潮：优先挑 06:00–18:00 之间的最高满潮，没有才退回全天最高 */
+    var dayHigh = hi.filter(function(x){
+        var h = Number(x.time.slice(0, 2));
+        return h >= 6 && h < 18;
+    }).sort(function(a, b){ return b.cm - a.cm; })[0] || bestHigh;
+
+    if (bestLow){
+        SANDBAR_WIN = _shift(bestLow.time, -120) + '–' + _shift(bestLow.time, 120);
+    }
+    /* 夜赶海是固定夜场，不跟潮水跑；只有潮水特别不合适时才提示改期 */
+    CRAB_WIN = '19:00–21:30';
+    var lastHighToday = hi.length ? hi[hi.length - 1] : bestHigh;
+
+    var cards = document.querySelectorAll('.show-card');
+    function setShow(idx, win, desc){
+        if (!cards[idx]) return;
+        var t = cards[idx].querySelector('.show-time');
+        var d = cards[idx].querySelector('.show-desc');
+        if (t && win) t.textContent = '🕐 ' + win;
+        if (d && desc) d.innerHTML = desc;
+    }
+    if (bestLow){
+        setShow(0, SANDBAR_WIN, '干潮 ' + bestLow.time + '（' + (bestLow.cm / 100).toFixed(1) +
+            '米）前后，沙洲完整浮现，走上「海中央」拍照打卡');
+    }
+    if (lastHighToday){
+        var crabNote = (Number(lastHighToday.time.slice(0, 2)) >= 17)
+            ? '满潮 ' + lastHighToday.time + ' 后开始退潮，这段时间海岸线变宽，是抓螃蟹的好时机'
+            : '今晚潮水从 ' + lastHighToday.time + ' 的满潮逐渐退下，海岸线变宽，是抓螃蟹的好时机';
+        setShow(1, CRAB_WIN, crabNote + '，带小桶小铲和头灯');
+    }
+    if (dayHigh){
+        SURF_WIN = _shift(dayHigh.time, -90) + '–' + _shift(dayHigh.time, 90);
+        setShow(2, SURF_WIN, '满潮 ' + dayHigh.time + '（' + (dayHigh.cm / 100).toFixed(1) +
+            '米）前后，白色浪花带最宽，水浅浪缓，戏水天堂');
+    }
+    BOARD_WIN = _shift(sunsetStr, -90) + '–' + sunsetStr;
+    setShow(3, BOARD_WIN, '今天日落 ' + sunsetStr + '，朝西面海无遮挡，桨板划向落日方向，看太阳沉进海平面');
+    setShow(5, _shift(sunsetStr, 30) + ' 起', '天黑后海边篝火升起，露天电影开演，夜里还有烟花（现场安排为准）');
+
+    /* --- 8. 大潮提醒里的「近期大潮日」 --- */
+    var bigDays = [];
+    days.forEach(function(k){
+        var evs = byDay[k] || [];
+        var h3 = evs.filter(function(x){ return x.type === 'high'; });
+        var l3 = evs.filter(function(x){ return x.type === 'low'; });
+        if (!h3.length || !l3.length) return;
+        var rg = Math.max.apply(null, h3.map(function(x){ return x.cm; }))
+               - Math.min.apply(null, l3.map(function(x){ return x.cm; }));
+        if (rg >= 500) bigDays.push({ k: k, rg: rg });
+    });
+    var fishEl = document.getElementById('bigDayTxt');
+    var fishEl2 = document.getElementById('bigDayTxt2');
+    var bigTxt;
+    if (bigDays.length){
+        bigTxt = bigDays.slice(0, 3).map(function(b){
+            var d = new Date(b.k + 'T12:00:00');
+            return _p2(d.getMonth() + 1) + '/' + _p2(d.getDate()) +
+                   '（' + lunarText(lunarDayOf(d)) + '）';
+        }).join('、');
+        if (fishEl) fishEl.innerHTML = '<b>近期大潮日：</b>' + bigTxt;
+        if (fishEl2) fishEl2.textContent = '近期大潮日：' + bigTxt;
+    } else {
+        if (fishEl) fishEl.innerHTML = '<b>近期潮水偏小：</b>未来一周没有天文大潮，' +
+            '想赶大潮建议等农历初一、十五前后再来。';
+        if (fishEl2) fishEl2.textContent = '近期潮水偏小，未来一周没有天文大潮';
+    }
+
+    /* --- 8.5 今日晨报（原来是一整块死文案，必须按当天重写） --- */
+    var egg = '';
+    var nearHigh = null;
+    if (sunsetStr !== '--:--' && typeof toMin === 'function'){
+        var ssMin = toMin(sunsetStr);
+        hi.forEach(function(x){ if (Math.abs(toMin(x.time) - ssMin) <= 60) nearHigh = x; });
+    }
+    if (nearHigh){
+        egg = '满潮 ' + nearHigh.time + ' 正撞日落 ' + sunsetStr + '——白浪配夕阳，全场最值得等的一幕！';
+    } else if (bestLow && Number(bestLow.time.slice(0, 2)) >= 9 && Number(bestLow.time.slice(0, 2)) <= 16){
+        egg = '干潮 ' + bestLow.time + ' 前后沙洲最完整，想走「海中央」趁这个点。';
+    } else if (sunsetStr !== '--:--'){
+        egg = '今天日落 ' + sunsetStr + '，提前 90 分钟到海边，光线最好看。';
+    }
+    var report = buildMorningReport({
+        date: now, lunar: lunarText(lunarDayOf(now)),
+        tideName: tt.name, tideNote: (range >= 500 ? '活汛' : (range < 400 ? '死汛' : '')),
+        hi: hi, lo: lo, sandbar: SANDBAR_WIN, surf: SURF_WIN,
+        boardWin: BOARD_WIN, sunset: sunsetStr, egg: egg
+    });
+    var mb = document.getElementById('msgBox');
+    if (mb) mb.textContent = report;
+    var mp = document.getElementById('msgBoxPlain');
+    if (mp) mp.value = report;
+
+    /* --- 9. 给 AI 客服 / 语音用的文字 --- */
+    DATE_TXT = (now.getMonth() + 1) + '月' + now.getDate() + '日';
+    TODAY_TIDES_TXT = tdy.map(function(t){
+        return t.time + (t.type === 'high' ? '满潮' : '干潮') + '（' + (t.cm / 100).toFixed(1) + '米）';
+    }).join('、');
+
+    /* --- 10. 重画曲线 + 刷新涨退潮状态 --- */
+    try { drawChart(); } catch (e) { console.warn('drawChart', e); }
+    try { updateStatus(); } catch (e) { console.warn('updateStatus', e); }
+}
+
+/* 启动：取当天数据，并每 5 分钟自动刷新 */
+loadLiveData();
+setInterval(loadLiveData, 5 * 60 * 1000);
+</script>
+</body>
+</html>
