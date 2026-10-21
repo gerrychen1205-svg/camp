@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Cache-Control" content="public, max-age=600">
 <title>HI LIVE 半岛落日营地 ｜ 来落日营地，过不一样的周末</title>
 <style>
 :root {
@@ -261,7 +261,7 @@ body {
         <div class="welcome-body">
             <p>亲爱的朋友，先听阿龙讲一段 30 秒的营地介绍 🎙️</p>
             <!-- 1. 主角：阿龙真人录音（内嵌 base64） -->
-            <audio id="welcomeAudio" src="assets/audio1.mp3" preload="auto" webkit-playsinline="true" playsinline="true"></audio>
+            <audio id="welcomeAudio" src="assets/audio1.mp3" preload="none" webkit-playsinline="true" playsinline="true"></audio>
             <div class="voice-progress" id="voiceProgress">
                 <div class="voice-bar"></div>
             </div>
@@ -311,7 +311,7 @@ body {
 
 <!-- BGM：muted autoplay 双重策略。第一次进入先静音尝试放，避开 iOS Safari 拦截；
      用户任一交互后立刻解除静音。117KB / 30s / 32kbps / ukulele 海滩风 -->
-<audio id="bgm" src="assets/audio2.mp3" autoplay muted loop preload="auto" playsinline webkit-playsinline="true" x5-video-player-type="h5"></audio>
+<audio id="bgm" src="assets/audio2.mp3" muted loop preload="none" playsinline webkit-playsinline="true" x5-video-player-type="h5"></audio>
 
 <!-- 音乐开关按钮（左上）+ 动态音波条指示播放中 -->
 <button id="bgmToggle" onclick="toggleBgm()" title="背景音乐" style="position:fixed;left:14px;top:14px;z-index:99;width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,.88);box-shadow:0 2px 10px rgba(0,0,0,.22);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;">
@@ -439,14 +439,14 @@ body {
 <div class="section">
     <div class="section-title"><span class="bar"></span>营地好伙伴 <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（合作伙伴推荐）</span></div>
     <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=acong" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_acong.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_acong.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">阿聪赶海 <span class="p-tag">赶海体验</span></div>
             <div class="p-desc">跟着阿聪去赶海！礁石区哪里藏螃蟹他最清楚，装备齐全，新手也能满载而归。点卡片跳转抖音号</div>
             <div class="p-cta">▶ 点我直接看视频</div>
             </div>
         </a><a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=acheng" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_acheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_acheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">阿城冲浪赶海 <span class="p-tag">冲浪教学</span></div>
             <div class="p-desc">阿城教练带你追白浪——营地的长浪线最适合入门，趴板、冲浪一次就上手。还会带你去赶海</div>
@@ -474,7 +474,7 @@ body {
                 <div class="p-cta">↗ 点我打开蜜原生态农场的视频号</div>
             </div>
         </a><a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=shensui" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_shensui.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_shensui.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">深邃度假酒店 <span class="p-tag">海景住宿</span></div>
             <div class="p-desc">漳浦本地海景度假酒店，点开看房间实拍与无敌海景</div>
@@ -560,7 +560,7 @@ body {
 <div class="section">
     <div class="section-title"><span class="bar"></span>落日营地，怎么玩？ <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（达人带你玩）</span></div>
     <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=cai" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_cai_xiansheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_cai_xiansheng.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">蔡先生的分享 <span class="p-tag">视频号</span></div>
             <div class="p-desc">起步即沙滩，退潮还能赶海！达人实拍带你走进漳浦HiLive落日野奢营地</div>
@@ -568,7 +568,7 @@ body {
         </div>
     </a>
 <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=yun" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_yunyoutianxia.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_yunyoutianxia.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">芸游天下☁️ <span class="p-tag">视频号</span></div>
             <div class="p-desc">野趣与浪漫共存，邂逅山海秘境！跟着芸游天下打卡漳州漳浦HiLive</div>
@@ -576,7 +576,7 @@ body {
         </div>
     </a>
 <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=hei" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_heijinjiang.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_heijinjiang.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">黑金酱 <span class="p-tag">视频号</span></div>
             <div class="p-desc">吸引我的不止有冲浪，还有超美的HiLive落日营地——达人黑金酱实拍</div>
@@ -593,7 +593,7 @@ body {
     </a>
     
 <a href="https://ab2552d2f65d98f42.app.workbuddy.link/play.html?v=mao" class="partner-card partner-link">
-        <div class="p-icon"><img src="videos/thumb_maomao.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
+        <div class="p-icon"><img loading="lazy" decoding="async" src="videos/thumb_maomao.jpg" style="width:52px;height:52px;border-radius:12px;object-fit:cover" alt=""></div>
         <div class="p-body">
             <div class="p-name">毛毛爱吃辣 <span class="p-tag">达人实拍</span></div>
             <div class="p-desc">毛毛带你吃玩落日营地！海边美食、帐篷住宿、营地生活一次分享</div>
@@ -757,9 +757,9 @@ function toggleBgm(){
     if(bgmPlaying || !a.paused){ a.pause(); bgmPlaying = false; _setBgmUI(false); }
     else { a.muted = false; a.volume = 0.35; a.play(); bgmPlaying = true; _setBgmUI(true); }
 }
-// 1) 桌面尝试直接有声播放；2) 移动端首次以静音方式启动（成功率高），等交互后 unmute
-setTimeout(() => tryPlayBgm({withSound:false}), 100);
-setTimeout(() => tryPlayBgm({withSound:true}),  800);
+// 2026-10-21 首屏瘦身：不再自动预载 196KB 背景音乐（原来 preload="auto" + autoplay，
+// 用户一进页面就抢带宽，而浏览器本来就不许无交互出声，等于白下）。
+// 改为「第一次触摸/点击/滑动才加载并播放」，由下面这行监听负责，体验不变、流量省下。
 // 任何用户交互立刻解锁有声播放
 ['touchstart','click','scroll','keydown','pointerdown'].forEach(ev=>
     document.addEventListener(ev, unlockBgmWithSound, {once:true, passive:true}));
@@ -1246,11 +1246,48 @@ function lunarText(n){
     return '廿' + c[n - 20];
 }
 
+/* 农历日 → 阿拉伯数字。优先用浏览器原生中国农历（Chrome/Safari/微信都支持），
+   比下面的月龄法准——月龄法在朔望附近会差一两天（错 47 就栽在这）。 */
+function lunarDayByIntl(d){
+    try{
+        var p = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { day: 'numeric' }).formatToParts(d);
+        for (var i = 0; i < p.length; i++){
+            if (p[i].type === 'day'){
+                var n = parseInt(p[i].value, 10);
+                if (n >= 1 && n <= 30) return n;
+            }
+        }
+    }catch(e){}
+    return null;
+}
+/* 农历中文：原生农历 → 月龄法兜底 */
+function lunarCNOf(d){
+    var n = lunarDayByIntl(d);
+    return lunarText(n || lunarDayOf(d));
+}
+
 /* ---------- 潮型：仅在站方没给时兜底（阈值按厦门站潮差刻度，将军澳量级不同，不能混用） ---------- */
 function tideTypeOf(cm){
     if (cm >= 500) return { name: '大潮', cls: 'p-big' };
     if (cm >= 400) return { name: '中潮', cls: 'p-mid' };
     return { name: '小潮', cls: 'p-small' };
+}
+
+/* ---------- 潮型／汛期兜底：按天文规律从农历日推（与站点无关） ----------
+   初一前后＝朔＝大潮，十五/十六＝望＝大潮；初八、廿三＝上下弦＝小潮。
+   ⚠️ 只在「站方没给」时才用；站方给了潮型就一律用站方的，不许覆盖。 */
+function tideKindByLunar(day){
+    if (!day) return null;
+    if (day <= 3 || (day >= 14 && day <= 19)) return '大潮';
+    if ((day >= 7 && day <= 9) || (day >= 22 && day <= 24)) return '小潮';
+    return '中潮';
+}
+/* 汛期兜底：大潮期＝活汛，小潮期＝死汛，中潮不硬贴标签 */
+function xunByKind(kind){
+    if (!kind) return '';
+    if (kind === '大潮' || kind === '巨潮') return '活汛';
+    if (kind === '小潮' || kind === '微潮') return '死汛';
+    return '';
 }
 
 /* ---------- 风向 / 天气码 ---------- */
@@ -1520,11 +1557,11 @@ function renderLive(ev, wx){
     var e1 = document.getElementById('heroDate');
     if (e1) e1.textContent = '📅 ' + now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
     var e2 = document.getElementById('heroLunar');
-    if (e2) e2.textContent = '农历' + (LUNAR_CN || lunarText(lunarDayOf(now)));
+    if (e2) e2.textContent = '农历' + (LUNAR_CN || lunarCNOf(now));
     var e3 = document.getElementById('heroTideType');
     if (e3){
-        var kindName = TIDE_KIND || tt.name;
-        var xunName = XUN || (range >= 500 ? '活汛' : (range < 400 ? '死汛' : ''));
+        var kindName = TIDE_KIND || tideKindByLunar(lunarDayByIntl(now)) || tt.name;
+        var xunName = XUN || xunByKind(kindName);
         e3.textContent = kindName + (xunName ? '·' + xunName : '');
     }
 
@@ -1706,9 +1743,9 @@ function renderLive(ev, wx){
         egg = '今天日落 ' + sunsetStr + '，提前 90 分钟到海边，光线最好看。';
     }
     var report = buildMorningReport({
-        date: now, lunar: LUNAR_CN || lunarText(lunarDayOf(now)),
-        tideName: TIDE_KIND || tt.name,
-        tideNote: XUN || (range >= 500 ? '活汛' : (range < 400 ? '死汛' : '')),
+        date: now, lunar: LUNAR_CN || lunarCNOf(now),
+        tideName: TIDE_KIND || tideKindByLunar(lunarDayByIntl(now)) || tt.name,
+        tideNote: XUN || xunByKind(TIDE_KIND || tideKindByLunar(lunarDayByIntl(now))),
         hi: hi, lo: lo, sandbar: SANDBAR_WIN, surf: SURF_WIN,
         boardWin: BOARD_WIN, sunset: sunsetStr, egg: egg
     });
