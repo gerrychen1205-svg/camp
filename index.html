@@ -375,7 +375,8 @@ body {
     <div class="section-title"><span class="bar"></span>潮汐曲线</div>
     <div class="chart-card">
         <svg id="tideChart" viewBox="0 0 440 200" style="width:100%;height:auto;"></svg>
-        <div class="chart-note">数据：厦门站 · TICON-4 潮汐模型（距营地约 33 公里） ｜ 蓝线=潮高 ｜ 🟢 绿牌 = 现在时刻</div>
+        <div class="chart-note">数据：将军澳站（国家海洋信息中心 586 · 距营地十几分钟车程） ｜ 蓝线=潮高 ｜ 🟢 绿牌 = 现在时刻</div>
+        <div class="chart-note" style="color:#C0703A;">表上是天文潮理论值：海边实际最低点通常再晚 20–40 分钟，死汛日退到底后水几乎不动</div>
         <div class="chart-note" id="liveStatus" style="font-weight:700;color:#8A97A5;">正在获取今天的潮汐与天气…</div>
     </div>
 </div>
@@ -1267,8 +1268,51 @@ function wxText(code){
     return M[code] || ['🌡️','—'];
 }
 
-/* ---------- 取潮汐 ---------- */
-function fetchTide(){
+/* ---------- 取潮汐 ----------
+   主数据源：将军澳站（国家海洋信息中心 586）——同片海湾、十几分钟车程
+     由 GitHub Actions 定时抓取生成本地 tide-586.json，同源读取，不受 CORS 限制
+   备数据源：openwaters.io 厦门站（TICON-4 模型，33 公里外，潮时约晚 20–25 分钟）
+--------------------------------------------------------------------------- */
+var TIDE_SRC = '—';
+var LUNAR_CN = null;     /* 农历（中文字，如「十二」），来自将军澳站 */
+var TIDE_KIND = null;    /* 潮型（大潮/中潮/小潮），来自将军澳站 */
+var XUN = null;          /* 汛期（活汛/死汛），来自将军澳站 */
+var JJ_DAYS = {};        /* 按日期索引：将军澳站给出的农历／潮型／汛期 */
+
+function _tideFromJunjiangao(){
+    return fetch('tide-586.json', { cache: 'no-store' }).then(function(r){
+        if (!r.ok) throw new Error('本地潮汐 JSON HTTP ' + r.status);
+        return r.json();
+    }).then(function(j){
+        if (!j.days || !j.days.length) throw new Error('本地潮汐 JSON 没有数据');
+        var out = [];
+        var todayKey = _ymd(new Date());
+        j.days.forEach(function(d){
+            /* 记下每一天的农历 / 潮型 / 汛期（站方给的，比本地推算准） */
+            var meta = {};
+            if (d.lunar) meta.lunar = String(d.lunar).replace(/\s/g, '');
+            if (d.tide_kind) meta.tide_kind = String(d.tide_kind).replace(/\s/g, '');
+            if (d.xun) meta.xun = String(d.xun).replace(/\s/g, '');
+            JJ_DAYS[d.date] = meta;
+            /* 今天的三个字段另存全局，顶部日期条直接用 */
+            if (d.date === todayKey){
+                if (meta.lunar) LUNAR_CN = meta.lunar;
+                if (meta.tide_kind) TIDE_KIND = meta.tide_kind;
+                if (meta.xun) XUN = meta.xun;
+            }
+            d.events.forEach(function(e){
+                var t = new Date(d.date + 'T' + e.time + ':00');
+                if (isNaN(t.getTime())) return;
+                out.push({ when: t, time: e.time, type: e.type, cm: e.cm });
+            });
+        });
+        if (!out.length) throw new Error('本地潮汐 JSON 没有潮汐事件');
+        TIDE_SRC = '将军澳（国家海洋信息中心 586）';
+        return out.sort(function(a, b){ return a.when - b.when; });
+    });
+}
+
+function _tideFromOpenwaters(){
     var now = new Date();
     var s = _dayAdd(now, -2), e = _dayAdd(now, 9);   /* 前后各留两天，防止跨日/曲线端点漏数据 */
     var u = 'https://api.openwaters.io/tides/extremes?latitude=' + CAMP_LAT
@@ -1279,6 +1323,7 @@ function fetchTide(){
         return r.json();
     }).then(function(j){
         if (!j.extremes || !j.extremes.length) throw new Error('潮汐数据为空');
+        TIDE_SRC = '厦门（TICON-4 模型）· 备用源';
         return j.extremes.map(function(x){
             var t = new Date(x.time);
             return {
@@ -1288,6 +1333,13 @@ function fetchTide(){
                 cm: Math.round(x.level * 100)
             };
         }).sort(function(a, b){ return a.when - b.when; });
+    });
+}
+
+function fetchTide(){
+    return _tideFromJunjiangao().catch(function(err){
+        if (window.console) console.warn('[潮汐] 将军澳站取不到，改用厦门站：', err && err.message);
+        return _tideFromOpenwaters();
     });
 }
 
@@ -1351,7 +1403,7 @@ function loadLiveData(){
         DATA_AT = new Date();
         LIVE_OK = true;
         renderLive(ev, wx);
-        if (statusEl) statusEl.textContent = '🔄 实时数据 · 更新于 ' + _fmtT(DATA_AT);
+        if (statusEl) statusEl.textContent = '🔄 ' + TIDE_SRC + ' · 更新于 ' + _fmtT(DATA_AT);
     }).catch(function(err){
         LIVE_OK = false;
         console.error('[实时数据]', err);
@@ -1443,9 +1495,13 @@ function renderLive(ev, wx){
     var e1 = document.getElementById('heroDate');
     if (e1) e1.textContent = '📅 ' + now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
     var e2 = document.getElementById('heroLunar');
-    if (e2) e2.textContent = '农历' + lunarText(lunarDayOf(now));
+    if (e2) e2.textContent = '农历' + (LUNAR_CN || lunarText(lunarDayOf(now)));
     var e3 = document.getElementById('heroTideType');
-    if (e3) e3.textContent = tt.name + (range >= 500 ? '·活汛' : (range < 400 ? '·死汛' : ''));
+    if (e3){
+        var kindName = TIDE_KIND || tt.name;
+        var xunName = XUN || (range >= 500 ? '活汛' : (range < 400 ? '死汛' : ''));
+        e3.textContent = kindName + (xunName ? '·' + xunName : '');
+    }
 
     /* --- 2. 天气卡 --- */
     var cur = wx.current || {};
@@ -1509,14 +1565,19 @@ function renderLive(ev, wx){
                 - Math.min.apply(null, l2.map(function(x){ return x.cm; }))
                 : 0;
             var t2 = tideTypeOf(rg);
+            var meta = JJ_DAYS[k] || {};
+            var kindName = meta.tide_kind || t2.name;
+            var lunTxt = meta.lunar || lunarText(lunarDayOf(d));
             var hiTxt = h2.map(function(x){ return x.time; }).join('／') || '—';
             var loTxt = l2.map(function(x){ return x.time; }).join('／') || '—';
             var ss = sunsets[i] ? sunsets[i].slice(11, 16) : '—';
-            var main = (t2.name === '大潮') ? '🎣 大潮日' : (l2.length ? '🐚 沙洲日' : '—');
+            var main = (kindName === '大潮') ? '🎣 大潮日' : (l2.length ? '🐚 沙洲日' : '—');
+            var clsMap = { '大潮': 'p-big', '中潮': 'p-mid', '小潮': 'p-small' };
+            var pillCls = clsMap[kindName] || t2.cls;
             rows += '<tr class="' + (i === 0 ? 'today-row' : '') + '">' +
                 '<td>' + (d.getMonth() + 1) + '/' + d.getDate() +
-                '<br><span class="sub">' + wk + '·' + lunarText(lunarDayOf(d)) + '</span></td>' +
-                '<td><span class="pill ' + t2.cls + '">' + t2.name + '</span></td>' +
+                '<br><span class="sub">' + wk + '·' + lunTxt + '</span></td>' +
+                '<td><span class="pill ' + pillCls + '">' + kindName + '</span></td>' +
                 '<td class="mono">🌊 ' + hiTxt + '<br>🐚 ' + loTxt + '</td>' +
                 '<td class="mono">' + ss + '</td>' +
                 '<td>' + main + '</td></tr>';
