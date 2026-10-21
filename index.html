@@ -108,6 +108,8 @@ body {
 .today-row { background:#FFF7F0; }
 .pill { font-size:10px; padding:3px 9px; border-radius:10px; white-space:nowrap; }
 .p-big { background:linear-gradient(90deg,#FF416C,#FF4B2B); color:#fff; font-weight:800; box-shadow:0 2px 8px rgba(255,65,108,.28); }
+/* 巨潮：比大潮更猛的一档，单独给个色，别跟大潮混在一起 */
+.p-mega { background:linear-gradient(90deg,#8E1B3A,#C0392B); color:#fff; font-weight:800; box-shadow:0 2px 10px rgba(142,27,58,.38); }
 .p-mid { background:#FFF3D6; color:#B8791A; }
 .p-small { background:#EDF2F7; color:#7C8BA0; }
 /* ===== 大潮卡 ===== */
@@ -608,8 +610,8 @@ body {
 
 <div class="footer">
     🌅 HI LIVE 半岛落日营地 · 潮汐站<br>
-    潮汐数据：将军澳站（漳浦县，距营地约25公里）（国家海洋信息中心） ｜ 日落：天文算法计算<br>
-    本页由 AI 每日清晨自动更新 · 生成于 2026-09-04 16:42<br>
+    潮汐数据：将军澳站（漳浦县 · 国家海洋信息中心 586 号站，与营地同片海湾、车程十几分钟） ｜ 天气与日落：按营地经纬度实时取值<br>
+    本页潮汐每天 06:10 自动更新，天气／日落每次打开实时刷新<br>
     🎵 背景音乐：《浪花一朵朵》（任贤齐/光良/阿牛 Live 版片段）仅供营地预热页氛围使用；正式商用请取得词曲及录音版权授权
 </div>
 
@@ -1198,15 +1200,18 @@ setInterval(()=>{ updateStatus(); drawChart(); }, 60000);
 <script>
 /* ===== 实时数据模块（外部文件 live.js 内联） ===== */
 /* ============================================================================
-   HI LIVE 半岛落日营地 · 实时数据模块 v1.0
-   2026-10-21 添加（小馨）
+   HI LIVE 半岛落日营地 · 实时数据模块 v2.0
+   2026-10-21 添加（小馨）｜ 2026-10-21 14:50 定版：潮汐主源换成将军澳 586
    ---------------------------------------------------------------------------
    原来页面上的潮汐、天气、日落、农历全部是生成当天写死的快照，
    时间一过就全错。这个模块改成每次打开都去取当天真实数据。
 
-   数据源：
-     · 潮汐     openwaters.io（TICON-4 数据集，CC BY 4.0，免 key，CORS 开放）
-                最近站点：厦门站，距营地约 33 公里
+   数据源（**已定：将军澳为主**，老爸 2026-10-21 拍板）：
+     · 潮汐 主  tide-586.json —— 将军澳站（国家海洋信息中心 586 号站）
+                 漳浦县同片海湾，车程十几分钟。农历／潮型／汛期都由站方给，不自己算。
+                 数据由每日 06:10 的定时任务从 eisk.cn 抓取后上传，页面读自己家的文件。
+     · 潮汐 备  openwaters.io（TICON-4 模型，厦门站，33 公里外，潮时晚 20–25 分钟）
+                 只在主源缺当天数据时才启用，状态行会标「备用源」。
      · 天气/日落 open-meteo.com（免 key，CORS 开放）
 
    原则：**取不到就明说取不到，绝不拿旧数据冒充今天的。**
@@ -1241,7 +1246,7 @@ function lunarText(n){
     return '廿' + c[n - 20];
 }
 
-/* ---------- 潮型（按当日潮差，厦门站实测范围 2.9–5.7 米） ---------- */
+/* ---------- 潮型：仅在站方没给时兜底（阈值按厦门站潮差刻度，将军澳量级不同，不能混用） ---------- */
 function tideTypeOf(cm){
     if (cm >= 500) return { name: '大潮', cls: 'p-big' };
     if (cm >= 400) return { name: '中潮', cls: 'p-mid' };
@@ -1315,6 +1320,18 @@ function _tideFromJunjiangao(){
             });
         });
         if (!out.length) throw new Error('本地潮汐 JSON 没有潮汐事件');
+        /* 万一某天站方没标潮型，用最近一天的补上——「潮型」是天文周期属性，
+           邻日之间不会突变，比拿潮差去套厦门站的刻度靠谱得多 */
+        var keys = Object.keys(JJ_DAYS).sort();
+        keys.forEach(function(k, idx){
+            if (JJ_DAYS[k].tide_kind) return;
+            for (var step = 1; step < keys.length; step++){
+                var a = keys[idx - step], b = keys[idx + step];
+                var src = (a && JJ_DAYS[a].tide_kind) ? JJ_DAYS[a]
+                        : ((b && JJ_DAYS[b].tide_kind) ? JJ_DAYS[b] : null);
+                if (src){ JJ_DAYS[k].tide_kind = src.tide_kind; break; }
+            }
+        });
         TIDE_SRC = '将军澳（国家海洋信息中心 586）';
         return out.sort(function(a, b){ return a.when - b.when; });
     });
@@ -1579,8 +1596,9 @@ function renderLive(ev, wx){
             var hiTxt = h2.map(function(x){ return x.time; }).join('／') || '—';
             var loTxt = l2.map(function(x){ return x.time; }).join('／') || '—';
             var ss = sunsets[i] ? sunsets[i].slice(11, 16) : '—';
-            var main = (kindName === '大潮') ? '🎣 大潮日' : (l2.length ? '🐚 沙洲日' : '—');
-            var clsMap = { '大潮': 'p-big', '中潮': 'p-mid', '小潮': 'p-small' };
+            var main = (kindName === '大潮' || kindName === '巨潮') ? '🎣 大潮日'
+                     : (l2.length ? '🐚 沙洲日' : '—');
+            var clsMap = { '巨潮': 'p-mega', '大潮': 'p-big', '中潮': 'p-mid', '小潮': 'p-small', '微潮': 'p-small' };
             var pillCls = clsMap[kindName] || t2.cls;
             rows += '<tr class="' + (i === 0 ? 'today-row' : '') + '">' +
                 '<td>' + (d.getMonth() + 1) + '/' + d.getDate() +
@@ -1638,15 +1656,23 @@ function renderLive(ev, wx){
     setShow(5, _shift(sunsetStr, 30) + ' 起', '天黑后海边篝火升起，露天电影开演，夜里还有烟花（现场安排为准）');
 
     /* --- 8. 大潮提醒里的「近期大潮日」 --- */
+    /* 大潮日以站方给的潮型为准（将军澳潮差天生比厦门小，拿 500cm 去卡永远是「没有大潮」） */
     var bigDays = [];
     days.forEach(function(k){
         var evs = byDay[k] || [];
         var h3 = evs.filter(function(x){ return x.type === 'high'; });
         var l3 = evs.filter(function(x){ return x.type === 'low'; });
-        if (!h3.length || !l3.length) return;
-        var rg = Math.max.apply(null, h3.map(function(x){ return x.cm; }))
-               - Math.min.apply(null, l3.map(function(x){ return x.cm; }));
-        if (rg >= 500) bigDays.push({ k: k, rg: rg });
+        var meta3 = JJ_DAYS[k] || {};
+        var isBig;
+        if (meta3.tide_kind){
+            isBig = (meta3.tide_kind === '大潮' || meta3.tide_kind === '巨潮');
+        } else if (h3.length && l3.length){
+            isBig = Math.max.apply(null, h3.map(function(x){ return x.cm; }))
+                  - Math.min.apply(null, l3.map(function(x){ return x.cm; })) >= 500;
+        } else {
+            isBig = false;
+        }
+        if (isBig) bigDays.push({ k: k, lunar: meta3.lunar || null });
     });
     var fishEl = document.getElementById('bigDayTxt');
     var fishEl2 = document.getElementById('bigDayTxt2');
@@ -1655,7 +1681,7 @@ function renderLive(ev, wx){
         bigTxt = bigDays.slice(0, 3).map(function(b){
             var d = new Date(b.k + 'T12:00:00');
             return _p2(d.getMonth() + 1) + '/' + _p2(d.getDate()) +
-                   '（' + lunarText(lunarDayOf(d)) + '）';
+                   '（' + (b.lunar || lunarText(lunarDayOf(d))) + '）';
         }).join('、');
         if (fishEl) fishEl.innerHTML = '<b>近期大潮日：</b>' + bigTxt;
         if (fishEl2) fishEl2.textContent = '近期大潮日：' + bigTxt;
@@ -1680,8 +1706,9 @@ function renderLive(ev, wx){
         egg = '今天日落 ' + sunsetStr + '，提前 90 分钟到海边，光线最好看。';
     }
     var report = buildMorningReport({
-        date: now, lunar: lunarText(lunarDayOf(now)),
-        tideName: tt.name, tideNote: (range >= 500 ? '活汛' : (range < 400 ? '死汛' : '')),
+        date: now, lunar: LUNAR_CN || lunarText(lunarDayOf(now)),
+        tideName: TIDE_KIND || tt.name,
+        tideNote: XUN || (range >= 500 ? '活汛' : (range < 400 ? '死汛' : '')),
         hi: hi, lo: lo, sandbar: SANDBAR_WIN, surf: SURF_WIN,
         boardWin: BOARD_WIN, sunset: sunsetStr, egg: egg
     });
