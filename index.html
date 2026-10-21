@@ -1285,8 +1285,16 @@ function _tideFromJunjiangao(){
         return r.json();
     }).then(function(j){
         if (!j.days || !j.days.length) throw new Error('本地潮汐 JSON 没有数据');
+        /* 过期保护：JSON 里必须有「今天」。没有就当作过期，退回厦门站备用源，
+           绝不拿昨天的潮汐表糊弄今天的客人 */
+        var todayStr = _ymd(new Date());
+        var hasToday = false;
+        for (var q = 0; q < j.days.length; q++){
+            if (j.days[q].date === todayStr){ hasToday = true; break; }
+        }
+        if (!hasToday) throw new Error('本地潮汐 JSON 缺少今天（' + todayStr + '）的数据，已过期');
         var out = [];
-        var todayKey = _ymd(new Date());
+        var todayKey = todayStr;
         j.days.forEach(function(d){
             /* 记下每一天的农历 / 潮型 / 汛期（站方给的，比本地推算准） */
             var meta = {};
