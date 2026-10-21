@@ -1,0 +1,233 @@
+{
+ "station": {
+  "code": "586",
+  "name": "将军澳",
+  "locality": "福建省漳浦县",
+  "source": "国家海洋信息中心（经潮汐表精灵 eisk.cn 发布）",
+  "note": "距 HI LIVE 半岛落日营地十几分钟车程，同一片海湾；比厦门站更贴近现场"
+ },
+ "fetched_at": "2026-10-21T14:35:26+08:00",
+ "datum": "当地理论最低潮面（天文潮，不含气象增减水）",
+ "unit": "cm",
+ "days": [
+  {
+   "date": "2026-10-21",
+   "lunar": "十二",
+   "tide_kind": "中潮",
+   "xun": "死汛",
+   "events": [
+    {
+     "time": "01:53",
+     "type": "low",
+     "cm": 260
+    },
+    {
+     "time": "07:27",
+     "type": "high",
+     "cm": 350
+    },
+    {
+     "time": "13:53",
+     "type": "low",
+     "cm": 190
+    },
+    {
+     "time": "20:48",
+     "type": "high",
+     "cm": 390
+    }
+   ]
+  },
+  {
+   "date": "2026-10-22",
+   "lunar": "十三",
+   "tide_kind": "中潮",
+   "xun": "死汛",
+   "events": [
+    {
+     "time": "02:55",
+     "type": "low",
+     "cm": 240
+    },
+    {
+     "time": "08:44",
+     "type": "high",
+     "cm": 370
+    },
+    {
+     "time": "14:57",
+     "type": "low",
+     "cm": 180
+    },
+    {
+     "time": "21:35",
+     "type": "high",
+     "cm": 410
+    }
+   ]
+  },
+  {
+   "date": "2026-10-23",
+   "lunar": "十四",
+   "tide_kind": "中潮",
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "03:44",
+     "type": "low",
+     "cm": 200
+    },
+    {
+     "time": "09:47",
+     "type": "high",
+     "cm": 390
+    },
+    {
+     "time": "15:53",
+     "type": "low",
+     "cm": 170
+    },
+    {
+     "time": "22:18",
+     "type": "high",
+     "cm": 430
+    }
+   ]
+  },
+  {
+   "date": "2026-10-24",
+   "lunar": "十五",
+   "tide_kind": "大潮",
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "04:26",
+     "type": "low",
+     "cm": 160
+    },
+    {
+     "time": "10:41",
+     "type": "high",
+     "cm": 430
+    },
+    {
+     "time": "16:42",
+     "type": "low",
+     "cm": 150
+    },
+    {
+     "time": "22:57",
+     "type": "high",
+     "cm": 440
+    }
+   ]
+  },
+  {
+   "date": "2026-10-25",
+   "lunar": "十六",
+   "tide_kind": "大潮",
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "05:07",
+     "type": "low",
+     "cm": 120
+    },
+    {
+     "time": "11:29",
+     "type": "high",
+     "cm": 460
+    },
+    {
+     "time": "17:27",
+     "type": "low",
+     "cm": 150
+    },
+    {
+     "time": "23:36",
+     "type": "high",
+     "cm": 460
+    }
+   ]
+  },
+  {
+   "date": "2026-10-26",
+   "lunar": "十七",
+   "tide_kind": null,
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "05:48",
+     "type": "low",
+     "cm": 90
+    },
+    {
+     "time": "12:16",
+     "type": "high",
+     "cm": 480
+    },
+    {
+     "time": "18:11",
+     "type": "low",
+     "cm": 140
+    }
+   ]
+  },
+  {
+   "date": "2026-10-27",
+   "lunar": "十八",
+   "tide_kind": "中潮",
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "00:15",
+     "type": "high",
+     "cm": 470
+    },
+    {
+     "time": "06:29",
+     "type": "low",
+     "cm": 60
+    },
+    {
+     "time": "13:02",
+     "type": "high",
+     "cm": 500
+    },
+    {
+     "time": "18:55",
+     "type": "low",
+     "cm": 150
+    }
+   ]
+  },
+  {
+   "date": "2026-10-28",
+   "lunar": "十九",
+   "tide_kind": "中潮",
+   "xun": "活汛",
+   "events": [
+    {
+     "time": "00:55",
+     "type": "high",
+     "cm": 480
+    },
+    {
+     "time": "07:12",
+     "type": "low",
+     "cm": 40
+    },
+    {
+     "time": "13:49",
+     "type": "high",
+     "cm": 500
+    },
+    {
+     "time": "19:39",
+     "type": "low",
+     "cm": 160
+    }
+   ]
+  }
+ ]
+}
