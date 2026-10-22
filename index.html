@@ -148,6 +148,25 @@ body {
 .copy-btn:active { opacity:.85; }
 /* ===== 营业状态 ===== */
 .status-note { background:#FFFDF5; border:1px solid #F2E3B3; border-radius:16px; padding:14px 16px; font-size:12px; color:#8A7420; line-height:1.8; }
+    /* 早订 9 折 · 预约登记（2026-10-22 加） */
+    .book-card { background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:16px; margin-bottom:10px; }
+    .book-hd { font-size:15px; font-weight:800; color:#2B3A4A; }
+    .book-sub { font-size:11.5px; color:#8A97A5; margin-top:4px; line-height:1.7; }
+    .bf-row { margin-top:11px; }
+    .bf-label { display:block; font-size:11.5px; font-weight:700; color:#7A8896; margin-bottom:5px; }
+    .bf-input, .bf-select { width:100%; box-sizing:border-box; padding:11px 12px; border:1.5px solid #E2E9F0; border-radius:12px;
+        font-size:14px; color:#2B3A4A; background:#FBFDFF; font-family:inherit; -webkit-appearance:none; appearance:none; }
+    .bf-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A97A5' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat:no-repeat; background-position:right 13px center; padding-right:32px; }
+    .bf-input:focus, .bf-select:focus { outline:none; border-color:#F2A65A; background:#fff; }
+    .bf-2col { display:flex; gap:10px; }
+    .bf-2col > div { flex:1; min-width:0; }
+    .bf-btn { width:100%; margin-top:14px; padding:14px; border:none; border-radius:14px; cursor:pointer;
+        background:linear-gradient(135deg,#F2994A,#E07B39); color:#fff; font-size:15px; font-weight:800;
+        box-shadow:0 4px 14px rgba(224,123,57,.3); font-family:inherit; }
+    .bf-btn:active { transform:scale(.985); }
+    .bf-tip { font-size:11px; color:#8A97A5; text-align:center; margin-top:9px; line-height:1.7; }
+    .bf-err { font-size:11.5px; color:#C0392B; margin-top:8px; display:none; }
 /* ===== footer ===== */
 .footer { text-align:center; font-size:11px; color:#A8B3BE; margin:22px 16px 0; line-height:1.8; }
 .toast { position:fixed; left:50%; bottom:40px; transform:translateX(-50%) translateY(20px); background:#2B3A4A;
@@ -558,7 +577,7 @@ body {
 </div>
 
 <div class="section">
-    <div class="section-title"><span class="bar"></span>住哪儿 <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（2027 年 4 月开订）</span></div>
+    <div class="section-title"><span class="bar"></span>住哪儿 <span style="font-size:11px;color:#A8B3BE;font-weight:400;">（2027 年 4 月开订 · 现在可先登记）</span></div>
 
     <div class="partner-card">
         <div class="p-icon">⛺</div>
@@ -585,7 +604,77 @@ body {
         </div>
     </div>
 
-    <div class="status-note">🔧 <b>现在还不能订房</b>：营地本体整修中，预计 <b>2027 年 4 月</b>重新开业后才开放预订。价格与各房型数量都还在定，正式公告会写在这一页。<br>不过营地里的<b>格格窑烤</b>现在照常开窑（周五六日 11:00–14:00·预约制），想先来海边感受一下，可以先约窑烤。</div>
+    <div class="partner-card" style="background:linear-gradient(135deg,#FFF8EC,#FFF0E4);">
+        <div class="p-icon">🎁</div>
+        <div class="p-body">
+            <div class="p-name">早订 9 折 <span class="p-tag">提前 30 天预约</span></div>
+            <div class="p-desc">
+                <b>提前 30 天</b>以上预约，房费直接<b>打 9 折</b>。<br>
+                早订，我们才好排班、备料、安排接待——省下来的那份人力，就折成您的房价。
+            </div>
+            <div class="p-cta">👇 下面填个登记，开订时第一个通知您</div>
+        </div>
+    </div>
+
+    <div class="book-card">
+        <div class="book-hd">📝 早订 9 折 · 预约登记</div>
+        <div class="book-sub">现在只是登记，<b>不收费、不用付订金</b>。2027 年 4 月开订时按登记顺序通知您，9 折权益保留。<br>登记内容不会自动上传，填完点下面按钮复制，发微信给我们就行。</div>
+
+        <div class="bf-row bf-2col">
+            <div>
+                <label class="bf-label" for="bkName">怎么称呼您</label>
+                <input class="bf-input" id="bkName" type="text" placeholder="陈先生" maxlength="20">
+            </div>
+            <div>
+                <label class="bf-label" for="bkPhone">手机号 / 微信号</label>
+                <input class="bf-input" id="bkPhone" type="text" placeholder="方便联系的" maxlength="30">
+            </div>
+        </div>
+
+        <div class="bf-row">
+            <label class="bf-label" for="bkType">想住哪种</label>
+            <select class="bf-select" id="bkType">
+                <option>还没定，请帮我推荐</option>
+                <option>亲子房（一家大小睡得开）</option>
+                <option>家庭式</option>
+                <option>精致小间</option>
+                <option>予光民宿（隔壁混凝土实体建筑）</option>
+            </select>
+        </div>
+
+        <div class="bf-row bf-2col">
+            <div>
+                <label class="bf-label" for="bkDate">预计入住</label>
+                <input class="bf-input" id="bkDate" type="date">
+            </div>
+            <div>
+                <label class="bf-label" for="bkNights">住几晚</label>
+                <input class="bf-input" id="bkNights" type="number" min="1" max="30" value="1">
+            </div>
+        </div>
+
+        <div class="bf-row bf-2col">
+            <div>
+                <label class="bf-label" for="bkAdults">几位大人</label>
+                <input class="bf-input" id="bkAdults" type="number" min="1" max="20" value="2">
+            </div>
+            <div>
+                <label class="bf-label" for="bkKids">几个小孩</label>
+                <input class="bf-input" id="bkKids" type="number" min="0" max="10" value="0">
+            </div>
+        </div>
+
+        <div class="bf-row">
+            <label class="bf-label" for="bkNote">有什么要交代的（可以不填）</label>
+            <input class="bf-input" id="bkNote" type="text" placeholder="要烧烤露台、带宠物、怕潮想住民宿…" maxlength="60">
+        </div>
+
+        <button class="bf-btn" onclick="copyBooking()">📋 一键复制登记信息</button>
+        <div class="bf-err" id="bfErr"></div>
+        <div class="bf-tip">复制后打开微信，发给营地客服；或直接拨 15392467749 讲一声也行</div>
+    </div>
+
+    <div class="status-note">🔧 <b>现在只登记，不收钱</b>：营地本体整修中，预计 <b>2027 年 4 月</b>重新开业，正式价格、各房型数量、开订日期都会公告在这一页。已登记的客人，开订时按顺序通知，<b>9 折保留</b>。<br>想先来海边感受一下，营地里的<b>格格窑烤</b>现在照常开窑（周五六日 11:00–14:00·预约制），可以先约窑烤。</div>
 </div>
 
 <div class="section">
@@ -808,10 +897,10 @@ const FAQ_LIST = [
  {k:['几点退潮','退潮','涨潮','满潮','干潮','潮汐','潮水','几点涨','潮'], a:'📅 今天（'+DATE_TXT+'）的潮汐：<br>'+TODAY_TIDES_TXT+'<br><br>🐚 鱼骨沙洲黄金时段：'+SANDBAR_WIN+'<br>🦀 夜赶海抓螃蟹：'+CRAB_WIN+'<br><br>退潮看沙洲、涨潮玩白浪，行程照着潮汐排就对了～'},
  {k:['赶海','螃蟹','抓蟹','挖螺','捡海货'], a:'🦀 赶海抓螃蟹的最佳时段是晚上 19:00–21:30！螃蟹是夜行性动物，傍晚退潮后海岸线变宽，正是它们出没的时候。<br><br>今晚推荐时段：'+CRAB_WIN+'<br>记得带：小桶、小铲、防滑鞋和头灯唷～<br><br>农历初一十五前后天文大潮最肥，可以看页面下方的「大潮赶海日历」！'},
  {k:['营业','开业','开门','重开','开了吗','营业吗','能去吗','现在能','什么时候开','进场','倒闭','倒了','关门','停业','还开着','不干了'], a:'🌅 营地本体整修升级中，预计 2027 年 4 月重新开张（之前因政府公共工程建设暂停约一年，不是经营问题唷～）。<br><br><b>不过营地里的「格格户外窑烤烘焙坊」已经照常开窑啦！</b>每周五、六、日 11:00–14:00，采预约制、小批量接待，想做披萨、买面包都可以约。<br><br>潮汐与日落照常每天更新，欢迎先收藏本页排行程！'},
- {k:['住宿','民宿','帐篷','订房','过夜','住一晚','房型','亲子房','家庭房','卫浴'], a:'🏕️ 营地共 <b>16 顶野奢帐篷</b>，分三种：<b>亲子房／家庭式／精致小间</b>。<br>每顶都有 <b>独立卫浴</b>，另有小客厅、小厨房，门口是<b>烧烤露台</b>；全部铺木地板、<b>整顶架高离地</b>建在海滩上方。<br><br>隔壁不到 200 米还有<b>予光民宿</b>（三十几间房、混凝土实体建筑，也看得到落日，但前面没有沙滩）。<br><br>⚠️ 目前整修中，暂未开放订房，预计 2027 年 4 月重开后上线。想第一时间收到开订通知，可以拨打客服专线 '+HOTLINE+' 留个联系方式～'},
+ {k:['住宿','民宿','帐篷','订房','过夜','住一晚','房型','亲子房','家庭房','卫浴','登记','预约房'], a:'🏕️ 营地共 <b>16 顶野奢帐篷</b>，分三种：<b>亲子房／家庭式／精致小间</b>。<br>每顶都有 <b>独立卫浴</b>，另有小客厅、小厨房，门口是<b>烧烤露台</b>；全部铺木地板、<b>整顶架高离地</b>建在海滩上方。<br><br>隔壁不到 200 米还有<b>予光民宿</b>（三十几间房、混凝土实体建筑，也看得到落日，但前面没有沙滩）。<br><br>🎁 <b>提前 30 天以上预约，房费 9 折</b>。<br>⚠️ 目前整修中，预计 2027 年 4 月重开。页面上「住哪儿」板块可以直接填<b>预约登记</b>——<b>不收费、不用付订金</b>，开订时按登记顺序通知您，9 折保留。也可以拨客服专线 '+HOTLINE+'。'},
  {k:['地址','在哪','怎么去','交通','导航','位置','路线','开车','停车','距离','住哪','gps','GPS','定位'], a:'📍 营地位于福建省漳州市漳浦县佛昙镇整美村（火山岛地质公园一带）。<br>从厦门、漳州、泉州自驾约 1–2 小时。<br><b>最快方式：点页面顶部的「📍 一键导航到营地」按钮</b>，高德/百度/腾讯任选，装了地图 App 会直接唤起导航～<br>也可以在地图 App 里搜「hilive落日营地」。<br><br>营地占地 40 亩临海，有停车区域，重开后收费细则会一并公布。'},
  {k:['亲子','小孩','孩子','儿童','宝宝','带娃','安全','几岁'], a:'👨‍👩‍👧 超适合亲子！营地有政府新建的防波堤，围出一片平静内湾——外浪被挡住、水深只到膝盖，是小朋友戏水和桨板新手的天然安全池。<br><br>海上活动请听从教练安排、穿好救生衣，家长看管好小朋友唷～'},
- {k:['价格','多少钱','收费','门票','贵不贵','费用','团购','套餐','抖音','房价','住一晚多少'], a:'💰 营地整修中，门票和套餐价格还没公布，预计 2027 年 4 月重开后上线。<br>住宿方面，帐篷<b>暂定约 800 元/晚</b>（亲子房、家庭式、精致小间价格会不一样，正式价格以开订公告为准）。<br><br>抖音上有我们的品牌页（搜「漳浦 hilive 落日营地」），使用规则以页面说明为准。想第一时间收到消息，可以拨打客服专线 '+HOTLINE+'～'},
+ {k:['价格','多少钱','收费','门票','贵不贵','费用','团购','套餐','抖音','房价','住一晚多少','折扣','优惠','打折','9折','九折','早订','便宜'], a:'💰 营地整修中，门票和套餐价格还没公布，预计 2027 年 4 月重开后上线。<br>住宿方面，帐篷<b>暂定约 800 元/晚</b>（亲子房、家庭式、精致小间价格会不一样，正式价格以开订公告为准）。<br><br>🎁 <b>早订优惠：提前 30 天以上预约，房费 9 折。</b>页面「住哪儿」板块可以填登记，<b>现在登记不收费、不用付订金</b>，开订时按顺序通知您，9 折保留。<br><br>想第一时间收到消息，可以拨客服专线 '+HOTLINE+'～'},
  {k:['电话','联系','人工','客服','投诉','找人','热线'], a:'☎️ 客服专线：'+HOTLINE+'<br>营业时间都有真人客服为您服务。也可以把问题告诉我，能答的我都会尽力答～'},
  {k:['天气','台风','下雨','风大','冷','热'], a:'🌦️ 沿海天气多变：阴天、起雾时拍照效果会打折；台风季（7–9月）和冬季风大时体验会受影响。<br><br>建议看天气择日再来——海边的美景，值得等一个好天气！'},
  {k:['日落','夕阳','晚霞','几点天黑'], a:'🌇 今天日落 '+SUNSET+'！营地朝西面海无遮挡，太阳会直接沉进海平面。<br><br>建议提前 90 分钟到西边海滩占好位置——白浪配夕阳，是全场最值得等的一幕！'},
@@ -1160,6 +1249,49 @@ function copyMsg(){
         navigator.clipboard.writeText(text).then(
             () => showCopyTip('✓ 已复制，去微信粘贴'),
             () => tryExecCopy(text)
+        );
+    } else {
+        tryExecCopy(text);
+    }
+}
+
+/* ===== 早订 9 折 · 预约登记（2026-10-22 加） =====
+   纯前端：填表 → 拼成一段文字 → 复制 → 客人发微信给我们。
+   不做上传、不收钱、不存任何数据。 */
+function copyBooking(){
+    const v = function(id){ const e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; };
+    const err = document.getElementById('bfErr');
+    const fail = function(m){ if(err){ err.textContent = m; err.style.display = 'block'; } };
+    if(err) err.style.display = 'none';
+
+    const name = v('bkName'), phone = v('bkPhone');
+    if(!name)  return fail('请先填一下怎么称呼您～');
+    if(!phone) return fail('留个手机号或微信号吧，不然开订时通知不到您。');
+
+    const date = v('bkDate');
+    const nights = v('bkNights') || '1';
+    const adults = v('bkAdults') || '2';
+    const kids   = v('bkKids')   || '0';
+    const note   = v('bkNote');
+
+    const lines = [
+        '【落日营地 · 早订 9 折 · 预约登记】',
+        '称呼：' + name,
+        '联系：' + phone,
+        '想住：' + (v('bkType') || '还没定，请帮我推荐'),
+        '入住：' + (date ? date.replace(/-/g, '/') : '还没定，想听建议'),
+        '晚数：' + nights + ' 晚',
+        '人数：' + adults + ' 大人' + (kids !== '0' ? ' + ' + kids + ' 小孩' : ''),
+        '备注：' + (note || '无'),
+        '',
+        '（提前 30 天以上预约，房费 9 折。本次登记不收费，开订时按顺序通知。）'
+    ];
+    const text = lines.join('\n');
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(
+            function(){ showCopyTip('✓ 已复制，去微信发给我们'); },
+            function(){ tryExecCopy(text); }
         );
     } else {
         tryExecCopy(text);
